@@ -68,13 +68,20 @@ secrets.json
 config.json
 *.credentials
 
-# IDE
+# IDE and Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 .DS_Store
+.eslintignore
+.cursorindexingignore
+.stylelintignore
+
+# Development and utility scripts
+check_db.sh
+migrate_to_postgresql.sh
 
 # Temporary files
 *.tmp
