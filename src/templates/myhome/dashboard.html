@@ -1,0 +1,471 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load lessons_tags %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard_modern.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Page Title -->
+    <div class="dashboard-header mb-5">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+                <h1 class="dashboard-title mb-2">
+                    <span class="dashboard-title-icon">📊</span>
+                    Dashboard
+                </h1>
+                <p class="dashboard-subtitle">Your financial education journey at a glance</p>
+            </div>
+            <div class="dashboard-welcome-badge">
+                <span class="welcome-text">Welcome back,</span>
+                <span class="username-text">{{ user.username }}!</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Cards -->
+    <div class="row g-4 mb-5">
+        <!-- Wallet Overview -->
+        <div class="col-lg-3 col-md-6" data-onboarding="wallet">
+            <div class="dashboard-stat-card wallet-card-modern">
+                <div class="stat-card-decoration"></div>
+                <div class="stat-card-icon-decoration"></div>
+                <div class="stat-card-content">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon wallet-icon">
+                            <i class="bi bi-wallet2"></i>
+                        </div>
+                        <div class="stat-card-title">Wallet</div>
+                    </div>
+                    <div class="stat-card-value">${{ wallet_total_balance|default:0|floatformat:2 }}</div>
+                    <div class="stat-card-meta">{{ wallet_total_count|default:0 }} wallet{{ wallet_total_count|default:0|pluralize }}</div>
+                    {% if practice_count|default:0 > 0 or real_count|default:0 > 0 %}
+                    <div class="stat-card-details mt-3">
+                        {% if practice_count|default:0 > 0 %}
+                        <div class="stat-detail-item">
+                            <i class="bi bi-pencil-square"></i>
+                            <span>Practice: <strong>${{ practice_balance|default:0|floatformat:2 }}</strong></span>
+                        </div>
+                        {% endif %}
+                        {% if real_count|default:0 > 0 %}
+                        <div class="stat-detail-item">
+                            <i class="bi bi-wallet2"></i>
+                            <span>Real: <strong>${{ real_balance|default:0|floatformat:2 }}</strong></span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    <div class="stat-card-action mt-3">
+                        <a href="{% url 'wallet:wallet_list' %}" class="stat-card-link">
+                            View Wallets <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spending Overview -->
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-stat-card spending-card-modern">
+                <div class="stat-card-decoration"></div>
+                <div class="stat-card-icon-decoration"></div>
+                <div class="stat-card-content">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon spending-icon">
+                            <i class="bi bi-cash-stack"></i>
+                        </div>
+                        <div class="stat-card-title">Spending</div>
+                    </div>
+                    <div class="stat-card-value">${{ spending_month_total|floatformat:2 }}</div>
+                    <div class="stat-card-meta">This month</div>
+                    <div class="stat-card-action mt-3">
+                        <a href="{% url 'tracking:spending_dashboard' %}" class="stat-card-link">
+                            View Details <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saving Overview -->
+        <div class="col-lg-3 col-md-6">
+            <div class="dashboard-stat-card saving-card-modern">
+                <div class="stat-card-decoration"></div>
+                <div class="stat-card-icon-decoration"></div>
+                <div class="stat-card-content">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon saving-icon">
+                            <i class="bi bi-piggy-bank"></i>
+                        </div>
+                        <div class="stat-card-title">Saving</div>
+                    </div>
+                    <div class="stat-card-value">${{ saving_total_amount|floatformat:2 }}</div>
+                    <div class="stat-card-meta">{{ saving_goals_total }} goal{{ saving_goals_total|pluralize }}</div>
+                    <div class="stat-card-action mt-3">
+                        <a href="{% url 'tracking:saving_goal_list' %}" class="stat-card-link">
+                            View Goals <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lessons Overview -->
+        <div class="col-lg-3 col-md-6" data-onboarding="lessons">
+            <div class="dashboard-stat-card lessons-card-modern">
+                <div class="stat-card-decoration"></div>
+                <div class="stat-card-icon-decoration"></div>
+                <div class="stat-card-content">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon lessons-icon">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <div class="stat-card-title">Lessons</div>
+                    </div>
+                    <div class="stat-card-value">{{ lessons_total }}</div>
+                    <div class="stat-card-meta">Available</div>
+                    <div class="stat-card-action mt-3">
+                        <a href="{% url 'lessons:lesson_list' %}" class="stat-card-link">
+                            View Lessons <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="stat-card-decoration"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Information Row -->
+    <div class="row g-4 mb-5">
+        <!-- Left Column: Saving Goals Progress -->
+        <div class="col-lg-6" data-onboarding="saving-goals">
+            <div class="dashboard-content-card">
+                <div class="content-card-header">
+                    <div class="content-card-title">
+                        <i class="bi bi-bullseye me-2"></i>
+                        Saving Goals Progress
+                    </div>
+                    <a href="{% url 'tracking:saving_goal_list' %}" class="content-card-action">
+                        View All <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="content-card-body">
+                    {% if saving_goals %}
+                        <div class="goal-stats mb-4">
+                            <div class="goal-stat-item">
+                                <div class="goal-stat-label">Active Goals</div>
+                                <div class="goal-stat-value">{{ saving_goals_active }}</div>
+                            </div>
+                            <div class="goal-stat-item">
+                                <div class="goal-stat-label">Completed</div>
+                                <div class="goal-stat-value text-success">{{ saving_goals_completed }}</div>
+                            </div>
+                        </div>
+                        <div class="goals-list">
+                            {% for goal in saving_goals %}
+                            <div class="goal-item-modern {% if goal.is_completed %}goal-completed{% endif %}">
+                                <div class="goal-item-header">
+                                    <div class="goal-item-title">
+                                        <span class="goal-icon">{{ goal.icon }}</span>
+                                        <span class="goal-name">{{ goal.goal_name }}</span>
+                                    </div>
+                                    <div class="goal-percentage-badge" style="background-color: {{ goal.color }};">
+                                        {{ goal.progress_percentage|floatformat:0 }}%
+                                    </div>
+                                </div>
+                                <div class="goal-progress-modern">
+                                    <div class="goal-progress-bar" style="width: {{ goal.progress_percentage }}%; background-color: {{ goal.color }};"></div>
+                                </div>
+                                <div class="goal-item-footer">
+                                    <div class="goal-amount">
+                                        <span class="goal-current">${{ goal.current_amount|floatformat:2 }}</span>
+                                        <span class="goal-separator">/</span>
+                                        <span class="goal-target">${{ goal.target_amount|floatformat:2 }}</span>
+                                    </div>
+                                    {% if goal.is_completed %}
+                                    <div class="goal-status completed">
+                                        <i class="bi bi-check-circle-fill"></i> Completed
+                                    </div>
+                                    {% else %}
+                                    <div class="goal-status pending">
+                                        <i class="bi bi-arrow-right-circle"></i> ${{ goal.remaining_amount|floatformat:2 }} left
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <div class="empty-state-icon">🎯</div>
+                            <div class="empty-state-text">No saving goals yet</div>
+                            <div class="empty-state-subtext">Create one to start tracking your progress!</div>
+                            <a href="{% url 'tracking:saving_goal_create' %}" class="btn btn-modern-primary mt-3">
+                                <i class="bi bi-plus-circle"></i> Create Goal
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Spending Categories and Wallet Transactions -->
+        <div class="col-lg-6" data-onboarding="spending">
+            <div class="dashboard-content-card">
+                <div class="content-card-header">
+                    <div class="content-card-title">
+                        <i class="bi bi-cash-stack me-2"></i>
+                        Top Spending Categories
+                    </div>
+                    <a href="{% url 'tracking:spending_dashboard' %}" class="content-card-action">
+                        View All <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="content-card-body">
+                    {% if top_spending_categories %}
+                        <div class="spending-categories-list">
+                            {% for category in top_spending_categories %}
+                            <div class="spending-category-item">
+                                <div class="category-info">
+                                    <div class="category-icon">{{ category.category__icon|default:"💰" }}</div>
+                                    <div class="category-details">
+                                        <div class="category-name">{{ category.category__name|default:"Uncategorized" }}</div>
+                                        <div class="category-count">{{ category.count }} transaction{{ category.count|pluralize }}</div>
+                                    </div>
+                                </div>
+                                <div class="category-amount">${{ category.total|floatformat:2 }}</div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <div class="empty-state-icon">💰</div>
+                            <div class="empty-state-text">No spending records yet</div>
+                            <a href="{% url 'tracking:spending_create' %}" class="btn btn-modern-primary mt-3">
+                                <i class="bi bi-plus-circle"></i> Add Spending
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet and Lessons Row -->
+    <div class="row g-4 mb-5">
+        <!-- Wallet Monthly Statistics and Charts -->
+        <div class="col-lg-6">
+            <div class="dashboard-content-card">
+                <div class="content-card-header">
+                    <div class="content-card-title">
+                        <i class="bi bi-wallet2 me-2"></i>
+                        Wallet Summary
+                    </div>
+                    <a href="{% url 'wallet:wallet_dashboard' %}" class="content-card-action">
+                        View All <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="content-card-body">
+                    <div class="wallet-stats-grid mb-4">
+                        <div class="wallet-stat-box income-box">
+                            <div class="wallet-stat-label">This Month Income</div>
+                            <div class="wallet-stat-value text-success">${{ wallet_month_income|floatformat:2 }}</div>
+                        </div>
+                        <div class="wallet-stat-box expense-box">
+                            <div class="wallet-stat-label">This Month Expense</div>
+                            <div class="wallet-stat-value text-danger">${{ wallet_month_expense|floatformat:2 }}</div>
+                        </div>
+                    </div>
+                    {% if wallet_chart_data_json %}
+                    <div class="chart-container mb-4">
+                        <canvas id="walletTrendChart"></canvas>
+                    </div>
+                    {% endif %}
+                    <div class="text-center">
+                        <a href="{% url 'wallet:wallet_list' %}" class="btn btn-modern-outline">
+                            <i class="bi bi-wallet2"></i> Manage Wallets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lessons Progress and Recent Lessons -->
+        <div class="col-lg-6">
+            <div class="dashboard-content-card">
+                <div class="content-card-header">
+                    <div class="content-card-title">
+                        <i class="bi bi-book me-2"></i>
+                        Lessons Progress
+                    </div>
+                    <a href="{% url 'lessons:lesson_list' %}" class="content-card-action">
+                        View All <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="content-card-body">
+                    <!-- Lessons Progress Statistics -->
+                    <div class="lessons-progress-section mb-4">
+                        <div class="progress-header">
+                            <span class="progress-label">Completed</span>
+                            <span class="progress-value">{{ lessons_completed }} / {{ lessons_total }}</span>
+                        </div>
+                        <div class="progress-modern">
+                            <div class="progress-bar-modern" style="width: {{ lessons_completion_percentage }}%">
+                                <span class="progress-text">{{ lessons_completion_percentage|floatformat:0 }}%</span>
+                            </div>
+                        </div>
+                        <div class="progress-badges mt-3">
+                            <span class="badge-modern badge-success">{{ lessons_completed }} Completed</span>
+                            <span class="badge-modern badge-warning">{{ lessons_in_progress }} In Progress</span>
+                        </div>
+                    </div>
+                    
+                    <div class="divider-modern"></div>
+                    
+                    <!-- Recent Lessons -->
+                    <div class="recent-lessons-section">
+                        <h6 class="section-subtitle mb-3">Recent Lessons</h6>
+                        {% if recent_lessons %}
+                            <div class="lessons-list-modern">
+                                {% for lesson in recent_lessons %}
+                                <div class="lesson-item-modern">
+                                    {% if lesson.icon %}
+                                    <div class="lesson-icon-large">{{ lesson.icon|render_icon|safe }}</div>
+                                    {% else %}
+                                    <div class="lesson-icon-large"><i class="ri-book-line"></i></div>
+                                    {% endif %}
+                                    <div class="lesson-info">
+                                        <div class="lesson-title">Lesson {{ lesson.lesson_number }}: {{ lesson.title }}</div>
+                                        <div class="lesson-meta">{{ lesson.duration_minutes }} min • Ages {{ lesson.age_range }}</div>
+                                    </div>
+                                    <a href="{% url 'lessons:lesson_detail' lesson.slug %}" class="btn btn-modern-sm">
+                                        View
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📚</div>
+                                <div class="empty-state-text">No lessons available</div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievements Overview and Quick Actions -->
+    <div class="row g-4">
+        <div class="col-lg-6" data-onboarding="achievements">
+            <div class="dashboard-content-card">
+                <div class="content-card-header">
+                    <div class="content-card-title">
+                        <i class="bi bi-trophy me-2"></i>
+                        Achievements Progress
+                    </div>
+                    <a href="{% url 'achievements:achievement_list' %}" class="content-card-action">
+                        View All <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+                <div class="content-card-body">
+                    <div class="achievements-progress-section mb-4">
+                        <div class="progress-header">
+                            <span class="progress-label">Unlocked</span>
+                            <span class="progress-value">{{ achievements_unlocked_count }} / {{ achievements_total }}</span>
+                        </div>
+                        <div class="progress-modern">
+                            <div class="progress-bar-modern progress-achievements" style="width: {{ achievements_progress }}%">
+                                <span class="progress-text">{{ achievements_progress|floatformat:0 }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% if recent_achievements %}
+                    <div class="divider-modern"></div>
+                    <div class="recent-achievements-section">
+                        <h6 class="section-subtitle mb-3">Recent Achievements</h6>
+                        <div class="achievements-list-modern">
+                            {% for user_achievement in recent_achievements %}
+                            <div class="achievement-item-modern">
+                                <div class="achievement-icon-large">{{ user_achievement.achievement.icon }}</div>
+                                <div class="achievement-info">
+                                    <div class="achievement-name">{{ user_achievement.achievement.name }}</div>
+                                    <div class="achievement-date">{{ user_achievement.unlocked_at|date:"M d, Y" }}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Action Buttons -->
+        <div class="col-lg-6">
+            <div class="dashboard-content-card">
+                <div class="content-card-header">
+                    <div class="content-card-title">
+                        <i class="bi bi-lightning-charge me-2"></i>
+                        Quick Actions
+                    </div>
+                </div>
+                <div class="content-card-body">
+                    <div class="quick-actions-grid">
+                        <a href="{% url 'wallet:wallet_create' %}" class="quick-action-btn action-wallet">
+                            <i class="bi bi-plus-circle"></i>
+                            <span>New Wallet</span>
+                        </a>
+                        <a href="{% url 'tracking:saving_goal_create' %}" class="quick-action-btn action-goal">
+                            <i class="bi bi-bullseye"></i>
+                            <span>New Goal</span>
+                        </a>
+                        <a href="{% url 'tracking:spending_create' %}" class="quick-action-btn action-spending">
+                            <i class="bi bi-cash"></i>
+                            <span>Add Spending</span>
+                        </a>
+                        <a href="{% url 'tracking:saving_create' %}" class="quick-action-btn action-saving">
+                            <i class="bi bi-piggy-bank"></i>
+                            <span>Add Saving</span>
+                        </a>
+                        <a href="{% url 'lessons:lesson_list' %}" class="quick-action-btn action-lesson">
+                            <i class="bi bi-book"></i>
+                            <span>Start Lesson</span>
+                        </a>
+                        <a href="{% url 'achievements:achievement_list' %}" class="quick-action-btn action-achievement">
+                            <i class="bi bi-trophy"></i>
+                            <span>Achievements</span>
+                        </a>
+                        <a href="{% url 'prizes:prize_list' %}" class="quick-action-btn action-prize" data-onboarding="prizes">
+                            <i class="bi bi-gift"></i>
+                            <span>Prize Shop</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if show_onboarding %}
+<div data-onboarding-active style="display: none;"></div>
+{% endif %}
+{% endblock content %}
+
+{% block scripts %}
+{% if show_onboarding %}
+<script src="{% static 'js/onboarding.js' %}"></script>
+{% endif %}
+
+{% if wallet_chart_data_json %}
+<script>
+// Pass chart data to JavaScript file
+window.walletChartData = {{ wallet_chart_data_json|safe }};
+</script>
+<script src="{% static 'js/dashboard_charts.js' %}"></script>
+{% endif %}
+{% endblock scripts %}
+

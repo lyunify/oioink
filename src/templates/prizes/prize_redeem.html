@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Navigation breadcrumb -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'prizes:prize_list' %}">Prizes</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'prizes:prize_detail' prize.pk %}">{{ prize.name }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Redeem</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px 15px 0 0;">
+                    <h4 class="mb-0 text-center">
+                        <span style="font-size: 2rem;" class="me-2">{{ prize.icon }}</span>
+                        Redeem: {{ prize.name }}
+                    </h4>
+                </div>
+                <div class="card-body p-4">
+                    <!-- Prize information -->
+                    <div class="alert alert-info mb-4" style="border-radius: 15px;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>Prize Cost:</strong>
+                                <span class="h4 mb-0 ms-2">⭐ {{ prize.coin_cost|floatformat:0 }} coins</span>
+                            </div>
+                            {% if prize.is_featured %}
+                            <span class="badge bg-warning text-dark">
+                                <i class="bi bi-star-fill"></i> Featured
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Wallet selection form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <h5 class="mb-3">Select Wallet</h5>
+                        <p class="text-muted mb-4">Choose which wallet to use for this redemption:</p>
+                        
+                        {% if form.wallet.queryset.count > 0 %}
+                        <div class="wallet-selection mb-4">
+                            {% for wallet_option in form.wallet %}
+                            {% for wallet_item in wallets_with_balance %}
+                            {% if wallet_item.wallet.id == wallet_option.choice_value %}
+                            <div class="card mb-3 wallet-option-card {% if not wallet_item.is_sufficient %}border-warning{% endif %}" 
+                                 style="border-radius: 15px; cursor: pointer; transition: all 0.3s ease;"
+                                 onclick="document.getElementById('{{ wallet_option.id_for_label }}').checked = true; updateSelection();">
+                                <div class="card-body p-3">
+                                    <div class="form-check">
+                                        {{ wallet_option.tag }}
+                                        <label class="form-check-label w-100" for="{{ wallet_option.id_for_label }}">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div class="d-flex align-items-center">
+                                                    <span style="font-size: 2rem;" class="me-3">{{ wallet_item.wallet.coin_icon|default:"⭐" }}</span>
+                                                    <div>
+                                                        <strong class="d-block">
+                                                            {{ wallet_item.wallet.coin_name|default:"Coin" }}
+                                                            {% if wallet_item.wallet.child_name %}
+                                                            - {{ wallet_item.wallet.child_name }}
+                                                            {% endif %}
+                                                        </strong>
+                                                        <small class="text-muted">
+                                                            {% if wallet_item.wallet.is_practice_mode %}
+                                                            <span class="badge bg-info me-1">Practice Mode</span>
+                                                            {% endif %}
+                                                            {% if not wallet_item.is_sufficient %}
+                                                            <span class="badge bg-warning text-dark">Insufficient Balance</span>
+                                                            {% endif %}
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="text-end">
+                                                    <div class="h5 mb-0 {% if wallet_item.is_sufficient %}text-success{% else %}text-warning{% endif %}">
+                                                        ⭐ {{ wallet_item.balance|floatformat:2 }}
+                                                    </div>
+                                                    <small class="text-muted">coins</small>
+                                                    {% if not wallet_item.is_sufficient %}
+                                                    <div class="small text-danger mt-1">
+                                                        Need: {{ prize.coin_cost|floatformat:0 }}
+                                                    </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-warning">
+                            <i class="bi bi-exclamation-triangle"></i> 
+                            <strong>No wallets available!</strong>
+                            <p class="mb-0 mt-2">You don't have any wallets with sufficient balance. Please create a wallet or earn more coins.</p>
+                            <div class="mt-3">
+                                <a href="{% url 'wallet:wallet_create' %}" class="btn btn-primary me-2">
+                                    <i class="bi bi-plus-circle"></i> Create Wallet
+                                </a>
+                                <a href="{% url 'lessons:lesson_list' %}" class="btn btn-outline-primary">
+                                    <i class="bi bi-book"></i> Earn Coins
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if form.wallet.errors %}
+                        <div class="alert alert-danger">
+                            {{ form.wallet.errors }}
+                        </div>
+                        {% endif %}
+                        
+                        {% if form.wallet.queryset.count > 0 %}
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <a href="{% url 'prizes:prize_detail' prize.pk %}" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg" style="border-radius: 15px;">
+                                <i class="bi bi-gift-fill"></i> Confirm Redemption
+                            </button>
+                        </div>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.wallet-option-card {
+    border: 2px solid #e9ecef;
+}
+
+.wallet-option-card:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.wallet-option-card input[type="radio"]:checked + label .wallet-option-card,
+.wallet-option-card:has(input[type="radio"]:checked) {
+    border-color: #667eea;
+    background-color: rgba(102, 126, 234, 0.05);
+}
+</style>
+
+<script>
+function updateSelection() {
+    // Update visual feedback for selected state
+    document.querySelectorAll('.wallet-option-card').forEach(card => {
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio && radio.checked) {
+            card.style.borderColor = '#667eea';
+            card.style.backgroundColor = 'rgba(102, 126, 234, 0.05)';
+        } else {
+            card.style.borderColor = '#e9ecef';
+            card.style.backgroundColor = '';
+        }
+    });
+}
+
+    // Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    updateSelection();
+    
+    // Listen for radio changes
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', updateSelection);
+    });
+});
+</script>
+{% endblock content %}
+

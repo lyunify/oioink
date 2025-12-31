@@ -1,0 +1,11 @@
+{% load static %}
+
+<!-- =================================== header content =================================== -->
+
+{% if request.user.is_authenticated %}
+    {% include 'includes/nav_in.html' %}
+{% else %}
+    {% include 'includes/nav_cover.html' %}
+{% endif %}
+
+<!-- =================================== header content =================================== -->

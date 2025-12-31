@@ -1,0 +1,35 @@
+{% load static %}
+
+<!-- =================================== footer content =================================== -->
+
+<div class="footer mt-auto py-3 bg-light border-top shadow-md">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <a class="nav-link p-2" href="{% url 'myhome:home' %}">Home</a>
+            <a class="nav-link p-2" href="{% url 'myhome:about' %}">About</a>
+            <a class="nav-link p-2" href="{% url 'myhome:contact' %}">Contact</a>
+            <a class="nav-link p-2" href="{% url 'myhome:terms' %}">Terms</a>
+            <a class="nav-link p-2" href="{% url 'myhome:privacy' %}">Privacy</a>
+        </div>
+        <div class="text-center">
+            Copyright &copy; 2024 OiOink. All Rights Reserved.
+        </div>
+    </div>
+</div>
+
+{% if request.user.is_authenticated %}
+<!-- JavaScript Search -->
+<script type="text/javascript">
+    document.getElementById("id_q").value = "{{query}}"
+</script>
+{% endif %}
+
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+    crossorigin="anonymous"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" 
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+<!-- =================================== footer content end =============================== -->

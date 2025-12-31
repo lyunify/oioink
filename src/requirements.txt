@@ -1,0 +1,18 @@
+# Django Framework
+Django>=6.0,<7.0
+
+# Environment Variables Management
+python-decouple>=3.8
+
+# Database Adapters
+psycopg2-binary>=2.9.0  # PostgreSQL adapter (optional, only needed if using PostgreSQL)
+
+# Storage Backend
+django-storages>=1.14.0
+
+# Markdown Support (for lesson content)
+Markdown>=3.5.0
+
+# Additional utilities (if needed)
+Pillow>=10.0.0  # Image processing
+

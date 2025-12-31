@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    <form class="llm-settings-form" id="llm-settings-form" method="post" enctype="multipart/form-data"
+        status_message="{{ status_message }}">{% csrf_token %}
+        <div class="h5 text-center mb-3 font-weight-normal">LLM / Vector Database Settings</div>
+
+        <!---------------------------- settings ------------------------------>
+        <h5>LLM</h5>
+        <!-- llm -->
+        <div class="row mb-3">
+            <div class="col">
+                <label for="id_llm_model" class="form-label">LLM Model*</label>
+                <input type="text" name="llm_model" id="id_llm_model" class="form-control" placeholder="LLM Model"
+                    value="{{ form.initial.llm }} {{ form.initial.llm_model }}" readonly>
+            </div>
+            <div class="col">
+                <label for="id_llm_temperature" class="form-label">LLM Temperature*</label>
+                <input type="text" name="llm_temperature" id="id_llm_temperature" class="form-control"
+                    placeholder="LLM Temperature" value="{{ form.initial.llm_temperature }}" readonly>
+            </div>
+        </div>
+        <br>
+        <h5>Vector Database / Search Engine</h5>
+        <!-- vector database -->
+        <div class="row mb-3">
+            <div class="col">
+                <label for="id_vector_db" class="form-label">Vector DB*</label>
+                <input type="text" name="vector_db" id="id_vector_db" class="form-control" placeholder="Vector DB"
+                    value="{{ form.initial.vector_db }}" readonly>
+            </div>
+            <div class="col">
+                <label for="id_search_engine" class="form-label">Search Engine</label>
+                <input type="text" name="search_engine" id="id_search_engine" class="form-control"
+                    placeholder="Search Engine" value="{{ form.initial.search_engine }}">
+            </div>
+        </div>
+        <div class="d-grid d-flex justify-content-center">{{ status_message }}</div>
+        <br>
+        <!---------------------------- end settings -------------------------->
+
+        {% if form.errors %}
+        <ul style="list-style-type:none;">
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- submit btn -->
+        <div class="d-grid gap-1 d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()">Back</button>
+            <div class="d-grid gap-2 d-flex justify-content-center">
+                <a class="btn btn-outline-primary" href="{% url 'data:llm_settings_update' %}">Change/Update</a>
+                <a class="btn btn-outline-primary" href="{% url 'data:file_upload' %}">Next</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/llm_settings.js' %}"></script>
+{% endblock scripts %}

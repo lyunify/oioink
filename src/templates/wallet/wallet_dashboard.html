@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Page title -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2">📊 Wallet Dashboard</h1>
+                    <p class="text-muted">View your wallet statistics and insights</p>
+                </div>
+                <div>
+                    <a href="{% url 'wallet:wallet_list' %}" class="btn btn-outline-info">
+                        <i class="bi bi-list"></i> View All Wallets
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-info text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Wallets</h5>
+                    <h2 class="mb-0">{{ total_wallets }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-success text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Balance</h5>
+                    <h2 class="mb-0">{{ total_balance|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-primary text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">This Month Income</h5>
+                    <h2 class="mb-0">{{ this_month_income|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-danger text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">This Month Expense</h5>
+                    <h2 class="mb-0">{{ this_month_expense|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Last 7 days statistics -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm bg-success text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Last 7 Days Income</h5>
+                    <h2 class="mb-0">{{ recent_income|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-sm bg-danger text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Last 7 Days Expense</h5>
+                    <h2 class="mb-0">{{ recent_expense|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics by child -->
+    {% if child_stats %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">👶 Statistics by Child</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Child Name</th>
+                                    <th>Total Income</th>
+                                    <th>Total Expense</th>
+                                    <th>Net Balance</th>
+                                    <th>Transactions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stat in child_stats %}
+                                <tr>
+                                    <td><strong>{{ stat.wallet__child_name }}</strong></td>
+                                    <td class="text-success">{{ stat.total_income|floatformat:2|default:"0.00" }}</td>
+                                    <td class="text-danger">{{ stat.total_expense|floatformat:2|default:"0.00" }}</td>
+                                    <td>
+                                        {% with net=stat.total_income|default:0|add:stat.total_expense|default:0|floatformat:2 %}
+                                        {% if net >= 0 %}
+                                        <span class="text-success">{{ net }}</span>
+                                        {% else %}
+                                        <span class="text-danger">{{ net }}</span>
+                                        {% endif %}
+                                        {% endwith %}
+                                    </td>
+                                    <td>{{ stat.count }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Total transactions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="mb-0">Total Transactions: {{ total_transactions }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+

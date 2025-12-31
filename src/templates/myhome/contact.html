@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/contact_page.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="contact-page-modern">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="contact-header text-center mb-5">
+            <h1 class="contact-title">Contact Us</h1>
+            <p class="contact-subtitle">Have questions? We'd love to hear from you!</p>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="contact-form-wrapper">
+            <form class="contact-form-modern" id="contact-form" method="post" status_message="{{ status_message }}">
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="contact-errors">
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-danger contact-alert">
+                            <i class="bi bi-exclamation-circle"></i>
+                            <span>{{ field.label }}: {{ error|escape }}</span>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger contact-alert">
+                            <i class="bi bi-exclamation-circle"></i>
+                            <span>{{ error|escape }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="form-row">
+                    <div class="form-group-modern">
+                        <label for="id_name" class="form-label-modern">
+                            <i class="bi bi-person"></i>
+                            Name *
+                        </label>
+                        <input type="text" name="name" id="id_name" class="form-input-modern" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group-modern">
+                        <label for="id_email" class="form-label-modern">
+                            <i class="bi bi-envelope"></i>
+                            Email Address *
+                        </label>
+                        <input type="email" name="email" id="id_email" class="form-input-modern" placeholder="your.email@example.com" required autofocus>
+                    </div>
+                </div>
+
+                <div class="form-group-modern">
+                    <label for="id_subject" class="form-label-modern">
+                        <i class="bi bi-tag"></i>
+                        Subject *
+                    </label>
+                    <input type="text" name="subject" id="id_subject" class="form-input-modern" placeholder="What's this about?" required>
+                </div>
+
+                <div class="form-group-modern">
+                    <label for="id_message" class="form-label-modern">
+                        <i class="bi bi-chat-left-text"></i>
+                        Message *
+                    </label>
+                    <textarea name="message" id="id_message" class="form-textarea-modern" placeholder="Tell us more about your question or feedback..." rows="8" required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-contact-submit" type="submit">
+                        <span>Send Message</span>
+                        <i class="bi bi-send"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Contact Info Section -->
+            <div class="contact-info-section">
+                <div class="contact-info-card">
+                    <div class="contact-info-icon">
+                        <i class="bi bi-envelope-fill"></i>
+                    </div>
+                    <div class="contact-info-content">
+                        <h4 class="contact-info-title">Email Us</h4>
+                        <p class="contact-info-text">yunify@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/contact.js' %}"></script>
+{% endblock scripts %}

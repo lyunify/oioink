@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Page title -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2">🏆 Achievements</h1>
+                    <p class="text-muted">Unlock achievements by completing tasks and reaching milestones!</p>
+                </div>
+                <div>
+                    <a href="{% url 'achievements:my_achievements' %}" class="btn btn-primary">
+                        <i class="bi bi-star-fill"></i> My Achievements
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement progress overview -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Overall Progress</h5>
+                        <strong>{{ unlocked_count }} / {{ total }} ({{ progress_percentage|floatformat:1 }}%)</strong>
+                    </div>
+                    <div class="progress" style="height: 30px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ progress_percentage }}%"
+                             aria-valuenow="{{ progress_percentage }}" 
+                             aria-valuemin="0" 
+                             aria-valuemax="100">
+                            <span class="fw-bold">{{ unlocked_count }} / {{ total }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter and search -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-6">
+                            <label for="search" class="form-label">Search</label>
+                            <input type="text" class="form-control" id="search" name="search" 
+                                   value="{{ search_query }}" placeholder="Search achievements...">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-control" id="type" name="type">
+                                <option value="">All Types</option>
+                                {% for type_code, type_name in achievement_types %}
+                                <option value="{{ type_code }}" {% if type_filter == type_code %}selected{% endif %}>
+                                    {{ type_name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unlocked achievements -->
+    {% if unlocked %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3">✅ Unlocked Achievements ({{ unlocked|length }})</h3>
+        </div>
+    </div>
+    <div class="row mb-5">
+        {% for achievement in unlocked %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm achievement-card h-100" style="border-left: 4px solid {{ achievement.color }};">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div style="font-size: 4rem;">{{ achievement.icon }}</div>
+                        <span class="badge bg-success"><i class="bi bi-check-circle"></i> Unlocked</span>
+                    </div>
+                    <h5 class="card-title text-center">{{ achievement.name }}</h5>
+                    <p class="card-text text-muted text-center">{{ achievement.description }}</p>
+                    {% if achievement.coin_reward > 0 %}
+                    <div class="text-center mb-2">
+                        <span class="badge bg-warning text-dark">
+                            <i class="bi bi-coin"></i> +{{ achievement.coin_reward|floatformat:0 }} coins
+                        </span>
+                    </div>
+                    {% endif %}
+                    <div class="text-center mt-3">
+                        <a href="{% url 'achievements:achievement_detail' achievement.pk %}" class="btn btn-sm btn-outline-primary">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Locked achievements -->
+    {% if locked %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3">🔒 Locked Achievements ({{ locked|length }})</h3>
+        </div>
+    </div>
+    <div class="row">
+        {% for achievement in locked %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm achievement-card h-100" style="border-left: 4px solid {{ achievement.color }}; opacity: 0.6;">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div style="font-size: 4rem; filter: grayscale(100%);">{{ achievement.icon }}</div>
+                        <span class="badge bg-secondary"><i class="bi bi-lock"></i> Locked</span>
+                    </div>
+                    <h5 class="card-title text-center">{{ achievement.name }}</h5>
+                    <p class="card-text text-muted text-center">{{ achievement.description }}</p>
+                    {% if achievement.coin_reward > 0 %}
+                    <div class="text-center mb-2">
+                        <span class="badge bg-secondary">
+                            <i class="bi bi-coin"></i> +{{ achievement.coin_reward|floatformat:0 }} coins
+                        </span>
+                    </div>
+                    {% endif %}
+                    <div class="text-center mt-3">
+                        <a href="{% url 'achievements:achievement_detail' achievement.pk %}" class="btn btn-sm btn-outline-secondary">
+                            View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Empty state -->
+    {% if not unlocked and not locked %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body text-center py-5">
+                    <h4 class="text-muted">No achievements found</h4>
+                    <p class="text-muted">Try adjusting your search or filter criteria.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+
+
+
+

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form class="auth-form" id="signin-form" method="post">{% csrf_token %}
+    <div class="h5 text-center mb-3 font-weight-normal">Sign In</div>
+    <div class="form-floating mb-3">
+        <input type="email" name="email" id="id_email" class="form-control" placeholder="Email address*" required
+            autofocus>
+        <label for="id_email">Email address*</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" name="password" id="id_password" class="form-control" placeholder="Password*" required>
+        <label for="id_password">Password*</label>
+    </div>
+    {% if form.errors %}
+    <ul style="list-style-type:none;">
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <li>{{field.label}}: {{ error|escape }}</li>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <li>{{ error|escape }}</li>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <br>
+    <button type="submit" class="btn btn-primary">Sign In</button>
+</form>
+<br>
+<div class="d-flex flex-column">
+    <a class="m-auto disabled" href="{% url 'password_reset' %}">Forgot Password?</a>
+</div>
+
+{% endblock content %}

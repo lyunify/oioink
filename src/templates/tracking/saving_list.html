@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Page title -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2">🐷 Saving Tracker</h1>
+                    <p class="text-muted">Track your children's saving habits</p>
+                </div>
+                <div>
+                    <a href="{% url 'tracking:saving_create' %}" class="btn btn-primary me-2">
+                        <i class="bi bi-plus-circle"></i> Add Saving
+                    </a>
+                    <a href="{% url 'tracking:saving_dashboard' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-bar-chart"></i> Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter and search -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-3">
+                            <label for="search" class="form-label">Search</label>
+                            <input type="text" class="form-control" id="search" name="search" 
+                                   value="{{ search_query }}" placeholder="Search...">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="child" class="form-label">Child</label>
+                            <select class="form-control" id="child" name="child">
+                                <option value="">All Children</option>
+                                {% for child in child_names %}
+                                <option value="{{ child }}" {% if child_filter == child %}selected{% endif %}>
+                                    {{ child }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="date_from" class="form-label">From Date</label>
+                            <input type="date" class="form-control" id="date_from" name="date_from" value="{{ date_from }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="date_to" class="form-label">To Date</label>
+                            <input type="date" class="form-control" id="date_to" name="date_to" value="{{ date_to }}">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm bg-success text-white">
+                <div class="card-body text-center">
+                    <h3 class="mb-0">Total Saved: ${{ total_amount|floatformat:2 }}</h3>
+                    <small>{{ savings|length }} record{{ savings|length|pluralize }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saving list -->
+    <div class="row">
+        {% for saving in savings %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card saving-card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="badge bg-success">🐷 Saving</span>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'tracking:saving_detail' saving.pk %}">View</a></li>
+                                <li><a class="dropdown-item" href="{% url 'tracking:saving_edit' saving.pk %}">Edit</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="{% url 'tracking:saving_delete' saving.pk %}">Delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4 class="saving-amount mb-2">${{ saving.amount|floatformat:2 }}</h4>
+                    <p class="saving-description mb-2">{{ saving.description }}</p>
+                    
+                    {% if saving.goal %}
+                    <p class="saving-goal mb-2">
+                        <small class="text-muted"><i class="bi bi-bullseye"></i> Goal: {{ saving.goal }}</small>
+                    </p>
+                    {% endif %}
+                    
+                    <div class="saving-meta">
+                        <small class="text-muted d-block">
+                            <i class="bi bi-calendar"></i> {{ saving.date|date:"M d, Y" }}
+                        </small>
+                        {% if saving.child_name %}
+                        <small class="text-muted d-block mt-1">
+                            <i class="bi bi-person"></i> {{ saving.child_name }}
+                        </small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body text-center py-5">
+                    <h4 class="text-muted">No saving records found</h4>
+                    <p class="text-muted">Start tracking your savings by adding a new record!</p>
+                    <a href="{% url 'tracking:saving_create' %}" class="btn btn-primary mt-3">
+                        <i class="bi bi-plus-circle"></i> Add Your First Saving
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+
+
+
+

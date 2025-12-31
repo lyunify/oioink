@@ -1,0 +1,1587 @@
+/* ------------------------------------ Custom Style for Page ---------------------------------- */
+
+/* ==================================== Cover Navbar Button Styles ==================================== */
+
+/* Unified navigation button styles - ensure consistent height and spacing */
+.btn-nav-cover {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-height: 40px;
+  height: 40px;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+.btn-nav-signin {
+  background: transparent;
+  color: #6366f1;
+  border: 2px solid #6366f1;
+}
+
+.btn-nav-signin:hover {
+  background: #6366f1;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+  text-decoration: none;
+}
+
+.btn-nav-signup {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-nav-signup:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.btn-nav-home {
+  background: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+.btn-nav-home:hover {
+  background: #e5e7eb;
+  color: #1f2937;
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.btn-nav-cover i {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Ensure buttons in navbar are aligned */
+.navbar-nav .nav-item {
+  display: flex;
+  align-items: center;
+}
+
+/* Mobile optimization */
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    gap: 0.75rem !important;
+  }
+  
+  .btn-nav-cover {
+    width: 100%;
+    justify-content: center;
+    margin: 0.25rem 0;
+  }
+}
+
+/* ==================================== Modern Navbar Styles ==================================== */
+
+/* Modern Navbar - light purple background */
+.modern-navbar {
+  background: linear-gradient(135deg, #eef2ff 0%, #f3e8ff 100%) !important;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(99, 102, 241, 0.2) !important;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+/* Modern Nav Links */
+.modern-nav-link {
+  color: #6366f1 !important;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.75rem !important;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.modern-nav-link:hover {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.modern-nav-link.active {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+}
+
+.modern-nav-link i {
+  font-size: 1.1rem;
+}
+
+/* Modern Dropdown Menu */
+.dropdown-menu-modern {
+  border-radius: 12px;
+  padding: 0.75rem 0.5rem !important;
+  margin-top: 0.5rem;
+  min-width: 220px;
+  /* Remove all shadows and borders to avoid extra boxes */
+  box-shadow: none !important;
+  border: none !important;
+  /* Force pure white background, fully opaque, ensure background text is not visible */
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  background-clip: padding-box !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+  /* Remove all possible gradients and transparency */
+  filter: none !important;
+  /* Remove outline */
+  outline: none !important;
+  /* Ensure dropdown menu is on top layer, background text not visible */
+  z-index: 1050 !important;
+  position: relative;
+  /* Add slight shadow to enhance visibility without affecting background */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  /* Ensure background coverage is complete */
+  min-height: fit-content;
+}
+
+/* Ensure all elements within dropdown-menu-modern are also opaque */
+.dropdown-menu-modern * {
+  opacity: 1 !important;
+}
+
+/* Remove default border and background from dropdown-item */
+.dropdown-menu-modern .dropdown-item-modern {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+}
+
+/* Ensure dropdown menu item backgrounds are also opaque */
+.dropdown-menu-modern .dropdown-item-modern:not(:hover) {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.dropdown-item-modern {
+  padding: 0.75rem 1rem !important;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #6366f1;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  margin: 0.125rem 0;
+  min-height: 40px;
+}
+
+.dropdown-item-modern:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #ffffff !important;
+  transform: translateX(4px);
+  /* On hover, only add slight shadow, do not add border */
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.25) !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.dropdown-item-modern i {
+  width: 20px;
+  text-align: center;
+}
+
+.dropdown-item-modern.text-danger {
+  color: #dc2626;
+}
+
+.dropdown-item-modern.text-danger:hover {
+  background: linear-gradient(135deg, #fca5a5 0%, #ef4444 100%) !important;
+  color: #ffffff !important;
+}
+
+/* Dropdown Divider */
+.dropdown-menu-modern .dropdown-divider {
+  border-color: rgba(99, 102, 241, 0.3);
+  margin: 0.5rem 0;
+}
+
+/* Dropdown Submenu */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -0.5rem;
+  margin-left: 0.25rem;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  z-index: 1051 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu > .dropdown-toggle::after {
+  margin-left: auto;
+}
+
+/* Dropdown Toggle Hover */
+.modern-nav-link.dropdown-toggle:hover {
+  color: #ffffff !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .modern-nav-link {
+    padding: 0.75rem 1rem !important;
+    border-radius: 8px;
+    margin: 0.25rem 0;
+  }
+
+  .dropdown-menu-modern {
+    margin-left: 1rem;
+    border-left: 2px solid #e5e7eb;
+  }
+}
+
+/* Search Bar Styles */
+.navbar .form-control:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.15);
+}
+
+/* Main Pages */
+.main {
+  min-height: 100vh;
+  height: 100%;
+  background-color: #fafafa;
+}
+.header {
+  padding-top: 3px;
+  padding-bottom: 1px;
+  background-color: #ffffff;
+  border-bottom: 0px solid #dddddd;
+}
+.content {
+  padding: 20px;
+}
+.footer {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background-color: #ffffff;
+  border-bottom: 0px solid #dddddd;
+  min-height: 50px;
+}
+
+/* dropdown menu opacity - remove old styles, use new modern styles */
+.dropdown-divider {
+  color: darkgray;
+  background-color: rgba(169, 169, 169, 0.9); /* Adjust the opacity value (0.9) 0=transparent 1=opaque */
+}
+.hr-divider {
+  height: 3px;
+  color: darkgray;
+}
+
+.user-message {
+  text-align: justify;
+  width: 100%;
+  color: white;
+  background-color: #2b313e;
+}
+.ai-message {
+  text-align: justify;
+  width: 100%;
+  color: white;
+  background-color: #475063;
+}
+
+/* form */
+.auth-form {
+  max-width: 500px;
+  margin: auto;
+}
+.auth-form .form-control {
+  position: relative;
+}
+
+.message-form {
+  width: 100%;
+  max-width: 700px;
+  padding: 15px;
+  margin: auto;
+  text-align: justify;
+}
+.message-form input[type="text"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.search-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+}
+.search-form input[type="search"] {
+  margin-bottom: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+#notice-msg {
+  text-align: center;
+}
+#alert-msg {
+  text-align: center;
+}
+
+#responsive-image {
+  width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+mark {
+  background-color: yellow;
+  color: black;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* General Pages */
+.container-text {
+  width: 60%;
+  text-align: justify;
+  padding: 20px;
+}
+.container-text-scoll {
+  height: 400px;
+  width: 60%;
+  overflow-y: scroll;
+  display: block;
+  text-align: justify;
+  padding: 20px;
+  border: 1px solid royalblue;
+}
+
+.table-info {
+  width: 60%;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Calendar Pages */
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.clearfix {
+  margin: 15px;
+}
+.form {
+  margin: auto;
+}
+.form input,
+.form select,
+.form textarea {
+  border-radius: 5px;
+  border: 1px solid #17a2b8;
+  outline: none;
+  background: none;
+  padding: 5px;
+  width: 100%;
+}
+.calendar {
+  width: 75%;
+  margin: auto;
+  font-size: 10px;
+}
+.calendar tr,
+.calendar td {
+  border: 1px solid lightgrey;
+}
+.calendar th {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+.calendar td {
+  width: 100px;
+  height: 75px;
+  padding: 20px 5px 5px 5px;
+}
+.month {
+  font-size: 20px;
+}
+.date {
+  font-size: 15px;
+}
+ul {
+  height: 100%;
+  padding: 5px 5px 5px 20px;
+}
+
+/* Lessons dropdown menu styling */
+.lessons-dropdown {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+  padding: 0.5rem 0;
+  min-width: 180px;
+}
+
+/* Nested dropdown menu styling for Oinklog */
+.dropdown-submenu {
+  position: relative;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu > .dropdown-toggle::after {
+  transform: rotate(-90deg);
+  float: right;
+  margin-top: 0.5rem;
+}
+
+.lessons-menu-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.2s ease;
+  color: #333;
+  font-weight: 500;
+}
+
+.lessons-menu-item:hover {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  color: #667eea;
+  transform: translateX(4px);
+}
+
+.lessons-menu-item .lesson-icon {
+  font-size: 1.2rem;
+  margin-right: 0.75rem;
+  width: 24px;
+  text-align: center;
+}
+
+.lessons-menu-item .lesson-text {
+  flex: 1;
+}
+
+.lessons-dropdown .dropdown-divider {
+  margin: 0.5rem 0;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Nested dropdown menu styling for Oinklog */
+.dropdown-submenu {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Ensure parent menu container allows overflow */
+.navbar {
+  overflow: visible !important;
+}
+
+.navbar .container-fluid {
+  overflow: visible !important;
+}
+
+.navbar .dropdown-menu {
+  overflow: visible !important;
+}
+
+.navbar-nav {
+  overflow: visible !important;
+}
+
+.lessons-dropdown {
+  overflow: visible !important;
+}
+
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -1px;
+  margin-left: 0.125rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: none;
+  position: absolute;
+  z-index: 1001;
+  min-width: 180px;
+}
+
+/* For dropleft, submenu should pop out from the left */
+.dropleft .dropdown-submenu > .dropdown-menu {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: 0.125rem;
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+
+.dropdown-submenu > .dropdown-toggle::after {
+  transform: rotate(-90deg);
+  float: right;
+  margin-top: 0.5rem;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Lessons Pages - Lesson List (lesson_list.html) */
+
+/* Lesson Card - lesson card container styles */
+.lesson-card {
+  border-radius: 15px;
+  border: none;
+  transition: transform 0.2s;
+}
+
+/* Lesson Card Hover Effect - lesson card hover effect */
+.lesson-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Lesson Card Link - lesson card link styles (remove underline, inherit color) */
+.lesson-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Lesson Cover Image - lesson cover image styles */
+.lesson-cover-image {
+  height: 200px;
+  object-fit: cover;
+  border-radius: 15px 15px 0 0;
+}
+
+/* Lesson Default Cover - lesson default cover background (shown when no image) */
+.lesson-default-cover {
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px 15px 0 0;
+}
+
+/* Lesson Default Cover Icon - lesson default cover icon styles */
+.lesson-default-cover-icon {
+  font-size: 80px;
+  color: white !important; /* Use white icon on gradient background */
+}
+
+.lesson-default-cover-icon .lesson-icon {
+  color: white !important;
+  font-size: 80px !important;
+}
+
+/* Lesson Icon - general icon styles */
+.lesson-icon {
+  font-size: 1.5em;
+  color: #6366f1;
+  vertical-align: middle;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Lessons Pages - Lesson Detail (lesson_detail.html) */
+
+/* Lesson Cover Card - lesson detail page cover card styles */
+.lesson-cover-card {
+  border-radius: 20px;
+  border: none;
+  overflow: hidden;
+}
+
+/* Lesson Cover Image Detail - lesson detail page cover image styles */
+.lesson-cover-image-detail {
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Lesson Default Cover Detail - lesson detail page default cover background */
+.lesson-default-cover-detail {
+  height: 300px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Lesson Default Cover Icon Detail - lesson detail page default cover icon styles */
+.lesson-default-cover-icon-detail {
+  font-size: 120px;
+  color: white !important; /* Use white icon on gradient background */
+}
+
+.lesson-default-cover-icon-detail .lesson-icon {
+  color: white !important;
+  font-size: 120px !important;
+}
+
+/* Lesson Cover Card Body - lesson cover card body styles */
+.lesson-cover-card-body {
+  background: white;
+}
+
+/* Section Card - lesson content module card styles */
+.section-card {
+  border-radius: 15px;
+  border: none;
+  transition: transform 0.2s;
+}
+
+/* Section Card Hover Effect - lesson content module card hover effect */
+.section-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Section Icon - lesson content module icon styles */
+.section-icon {
+  font-size: 40px;
+}
+
+/* Section Image - image styles in lesson content module */
+.section-image {
+  max-height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Section Content - text content styles in lesson content module */
+.section-content {
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+/* Section Content Headings - heading styles in lesson content module */
+.section-content h1,
+.section-content h2,
+.section-content h3 {
+  color: #333;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Section Content Paragraphs - paragraph styles in lesson content module */
+.section-content p {
+  margin-bottom: 1rem;
+}
+
+/* Section Content Lists - list styles in lesson content module */
+.section-content ul,
+.section-content ol {
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Section Content List Items - list item styles in lesson content module */
+.section-content li {
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================================================
+   Children-Friendly Lesson Styles - child-friendly lesson styles
+   ============================================================================ */
+
+/* Section Card for Kids - child-friendly lesson content card */
+.section-card-kids {
+  border-radius: 24px;
+  border: 3px solid #f0f0f0;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.section-card-kids:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+  border-color: #c7d2fe;
+}
+
+/* Section Header for Kids - child-friendly section header area */
+.section-header-kids {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 3px dashed #e5e7eb;
+}
+
+.section-icon-wrapper-kids {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #eef2ff 0%, #ddd6fe 100%);
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.section-icon-wrapper-kids .lesson-icon {
+  font-size: 2.5rem !important;
+  color: #6366f1 !important;
+}
+
+.section-title-kids {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.3;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Section Image for Kids - child-friendly image styles */
+.section-image-wrapper-kids {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.section-image-kids {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+/* Section Content for Kids - child-friendly content styles */
+.section-content-kids {
+  font-size: 1.25rem;
+  line-height: 2;
+  color: #334155;
+  font-weight: 400;
+}
+
+.section-content-kids h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #eef2ff;
+}
+
+.section-content-kids h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #334155;
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+  padding-left: 1rem;
+  border-left: 4px solid #6366f1;
+}
+
+.section-content-kids h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #475569;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.section-content-kids p {
+  font-size: 1.25rem;
+  line-height: 2;
+  margin-bottom: 1.5rem;
+  color: #475569;
+}
+
+.section-content-kids ul,
+.section-content-kids ol {
+  padding-left: 2.5rem;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+}
+
+.section-content-kids li {
+  margin-bottom: 1rem;
+  line-height: 2;
+  color: #475569;
+  padding-left: 0.5rem;
+}
+
+.section-content-kids li strong {
+  color: #6366f1;
+  font-weight: 600;
+}
+
+.section-content-kids blockquote {
+  border-left: 4px solid #f59e0b;
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+  background: #fffbeb;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #78350f;
+}
+
+/* Sidebar Card for Kids - child-friendly sidebar card */
+.lesson-sidebar-card-kids {
+  border-radius: 20px;
+  border: 3px solid #fef3c7;
+  background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%);
+  top: 20px;
+}
+
+.card-header-kids {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  padding: 1.25rem 1.5rem;
+  border-radius: 20px 20px 0 0;
+  border-bottom: 3px solid #f59e0b;
+}
+
+.card-header-kids h5 {
+  color: #78350f;
+  font-size: 1.25rem;
+}
+
+/* Tip Item for Kids - child-friendly tip item */
+.tip-item-kids {
+  padding: 1.25rem;
+  background: white;
+  border-radius: 16px;
+  border: 2px solid #fef3c7;
+  transition: all 0.3s ease;
+}
+
+.tip-item-kids:hover {
+  transform: translateX(5px);
+  border-color: #f59e0b;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.tip-icon-wrapper-kids {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 12px;
+  flex-shrink: 0;
+  margin-right: 1rem;
+}
+
+.tip-icon-wrapper-kids .lesson-icon {
+  font-size: 1.5rem !important;
+  color: #f59e0b !important;
+}
+
+.tip-content-kids {
+  flex: 1;
+}
+
+.tip-title-kids {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #78350f;
+  margin-bottom: 0.75rem;
+}
+
+.tip-text-kids {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #92400e;
+  margin: 0;
+}
+
+/* Section Content Images - image styles in lesson content module */
+.section-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Lesson Sidebar Card - lesson detail page sidebar card styles (tips) */
+.lesson-sidebar-card {
+  top: 20px;
+  border-radius: 15px;
+  border: none;
+}
+
+/* Lesson Sidebar Card Header - lesson detail page sidebar card header styles */
+.lesson-sidebar-card-header {
+  border-radius: 15px 15px 0 0;
+}
+
+/* Lesson Tip Icon - lesson tip icon styles */
+.lesson-tip-icon {
+  font-size: 24px;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Tracking Pages - Spending Tracking */
+
+/* Spending Card - spending record card styles */
+.spending-card {
+  border-radius: 15px;
+  border: none;
+  transition: transform 0.2s;
+}
+
+/* Spending Card Hover Effect - spending record card hover effect */
+.spending-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Spending Amount - spending amount styles */
+.spending-amount {
+  color: #667eea;
+  font-weight: 700;
+}
+
+/* Spending Description - spending description styles */
+.spending-description {
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Spending Meta - spending metadata styles */
+.spending-meta {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+/* Spending Category Badge - spending category badge styles */
+.spending-category-badge {
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+}
+
+/* Spending Category Badge Large - large spending category badge styles */
+.spending-category-badge-lg {
+  font-size: 1.1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+}
+
+/* Spending Detail Card - spending detail card styles */
+.spending-detail-card {
+  border-radius: 20px;
+  border: none;
+}
+
+/* Spending Detail Amount - spending detail amount styles */
+.spending-detail-amount {
+  color: #667eea;
+  font-weight: 700;
+}
+
+/* Spending Detail Info - spending detail info styles */
+.spending-detail-info {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Tracking Pages - Saving Tracking */
+
+/* Saving Card - saving record card styles */
+.saving-card {
+  border-radius: 15px;
+  border: none;
+  transition: transform 0.2s;
+}
+
+/* Saving Card Hover Effect - saving record card hover effect */
+.saving-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Saving Amount - saving amount styles */
+.saving-amount {
+  color: #00B894;
+  font-weight: 700;
+}
+
+/* Saving Description - saving description styles */
+.saving-description {
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Saving Goal - saving goal styles */
+.saving-goal {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Saving Meta - saving metadata styles */
+.saving-meta {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+/* Saving Detail Card - saving detail card styles */
+.saving-detail-card {
+  border-radius: 20px;
+  border: none;
+}
+
+/* Saving Detail Amount - saving detail amount styles */
+.saving-detail-amount {
+  color: #00B894;
+  font-weight: 700;
+}
+
+/* Saving Detail Info - saving detail info styles */
+.saving-detail-info {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* ==================================== Dashboard Styles ==================================== */
+
+/* Dashboard Card Hover Effect */
+.card.shadow-sm {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card.shadow-sm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Dashboard Gradient Cards */
+.card[style*="gradient"] {
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.card[style*="gradient"]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Dashboard Progress Bar Animation */
+.progress-bar {
+  transition: width 0.6s ease;
+}
+
+/* Saving Goal Card Styles */
+.saving-goal-card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.saving-goal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.saving-goal-detail-card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* Dashboard Quick Actions */
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Dashboard Stat Cards */
+.card-header.bg-success,
+.card-header.bg-danger,
+.card-header.bg-info,
+.card-header.bg-warning,
+.card-header.bg-primary {
+  border: none;
+}
+
+/* ==================================== Saving Goals Enhanced Styles ==================================== */
+
+/* Saving Goal Progress Bar - enhanced progress bar styles */
+.saving-goal-progress-bar {
+  height: 30px;
+  border-radius: 15px;
+  background-color: #e9ecef;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.saving-goal-progress-bar .progress-bar {
+  height: 100%;
+  border-radius: 15px;
+  position: relative;
+  transition: width 1s ease-in-out;
+  background: linear-gradient(90deg, currentColor 0%, rgba(255, 255, 255, 0.3) 50%, currentColor 100%);
+  background-size: 200% 100%;
+  animation: progress-shine 2s infinite;
+}
+
+@keyframes progress-shine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Saving Goal Card Enhanced - enhanced saving goal card */
+.saving-goal-card-enhanced {
+  border-radius: 20px;
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.saving-goal-card-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--goal-color, #667eea) 0%, rgba(102, 126, 234, 0.5) 100%);
+}
+
+.saving-goal-card-enhanced:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Saving Goal Progress Circle - circular progress indicator */
+.saving-goal-progress-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  background: conic-gradient(
+    var(--goal-color, #667eea) 0deg,
+    var(--goal-color, #667eea) calc(var(--progress, 0) * 3.6deg),
+    #e9ecef calc(var(--progress, 0) * 3.6deg),
+    #e9ecef 360deg
+  );
+  padding: 5px;
+}
+
+.saving-goal-progress-circle::before {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: white;
+}
+
+.saving-goal-progress-circle span {
+  position: relative;
+  z-index: 1;
+  color: var(--goal-color, #667eea);
+}
+
+/* Saving Goal Status Badge - status badge */
+.saving-goal-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.saving-goal-status-badge.completed {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  animation: pulse-success 2s infinite;
+}
+
+.saving-goal-status-badge.in-progress {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  color: white;
+}
+
+@keyframes pulse-success {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+  }
+}
+
+/* Saving Goal Amount Display - enhanced amount display */
+.saving-goal-amount-display {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.saving-goal-amount-small {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Saving Goal Visual Progress - visual progress display */
+.saving-goal-visual-progress {
+  position: relative;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  border-radius: 15px;
+  margin: 1rem 0;
+}
+
+.saving-goal-visual-progress .progress-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Saving Goal Completion Animation - completion animation */
+.saving-goal-completed-animation {
+  animation: celebrate 0.6s ease-in-out;
+}
+
+@keyframes celebrate {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05) rotate(2deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-2deg);
+  }
+}
+
+/* Saving Goal Detail Enhanced - enhanced detail page styles */
+.saving-goal-detail-enhanced {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.saving-goal-detail-header {
+  padding: 2rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.saving-goal-detail-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==================================== Lesson Completion Styles ==================================== */
+
+/* Lesson Complete Button - lesson completion button styles */
+#lesson-complete-btn {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+#lesson-complete-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+#lesson-complete-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+#lesson-complete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(40, 167, 69, 0.3);
+}
+
+#lesson-complete-btn:active {
+  transform: translateY(0);
+}
+
+/* Lesson Progress Card - enhanced lesson progress card */
+.lesson-progress-card {
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.lesson-progress-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Lesson Completion Animation - lesson completion animation */
+@keyframes coinBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+  }
+}
+
+.lesson-completion-coin {
+  display: inline-block;
+  animation: coinBounce 1s ease-in-out infinite;
+}
+
+/* Lesson Status Badge - lesson status badge */
+.lesson-status-badge {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lesson-status-badge.completed {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  animation: pulse-success 2s infinite;
+}
+
+.lesson-status-badge.in-progress {
+  background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+  color: white;
+}
+
+.lesson-status-badge.not-started {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+}
+
+/* ==================================== Dashboard Styles ==================================== */
+
+/* Saving goal progress bar styles */
+.saving-goal-progress-bar {
+  position: relative;
+  background-color: #e9ecef;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.saving-goal-progress-bar .progress-bar {
+  transition: width 0.6s ease;
+  border-radius: 10px;
+}
+
+/* Progress percentage badge */
+.progress-badge {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* ==================================== Practice Mode Styles ==================================== */
+
+/* Practice Wallet Card - practice mode wallet card */
+.practice-wallet-card {
+  border: 3px solid #17a2b8 !important;
+  border-radius: 15px;
+  position: relative;
+  background: linear-gradient(to bottom, rgba(23, 162, 184, 0.05) 0%, transparent 100%);
+}
+
+.practice-wallet-card::before {
+  content: 'PRACTICE';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #17a2b8;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  z-index: 1;
+}
+
+.practice-wallet-card .card-header {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+}
+
+.practice-mode-banner {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(23, 162, 184, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(23, 162, 184, 0);
+  }
+}
+
+/* Real Wallet Card - real mode wallet card */
+.real-wallet-card {
+  border: 2px solid #e9ecef;
+  border-radius: 15px;
+}
+
+.real-wallet-card .card-header {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+}
+
+/* Practice Mode Badge - practice mode badge */
+.practice-mode-badge {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+/* Practice Mode Indicator - practice mode indicator */
+.practice-mode-indicator {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background: rgba(23, 162, 184, 0.1);
+  border: 1px solid #17a2b8;
+  border-radius: 15px;
+  color: #17a2b8;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Responsive adjustments for dashboard */
+@media (max-width: 768px) {
+  .card-body h2 {
+    font-size: 1.5rem;
+  }
+  
+  .card-body h5 {
+    font-size: 1rem;
+  }
+  
+  .saving-goal-progress-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 1.2rem;
+  }
+  
+  .saving-goal-progress-circle::before {
+    width: 65px;
+    height: 65px;
+  }
+  
+  .saving-goal-amount-display {
+    font-size: 1.5rem;
+  }
+  
+  #lesson-complete-btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+  
+  .practice-wallet-card::before {
+    font-size: 0.6rem;
+    padding: 0.2rem 0.5rem;
+  }
+}

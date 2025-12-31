@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    <div class="h5 text-center mb-3 font-weight-normal">Vector DB List</div>
+
+    <!------------------------------- file list ------------------------------>
+    <div class="d-grid d-flex justify-content-center">
+        List of vector dbs for custom data sets. The vector db with a check mark indicates active db.
+        To make a vector db active, click on the vector db name. To delete unwanted vector_dbs, click on the waste bin.
+    </div>
+    <br>
+    <ul class="list-group">
+        {% for vector_db in vector_dbs %}
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col">
+                    <a href="{% url 'data:activate_vector_db' vector_db.directory %}">{{ vector_db.directory }}</a>
+                </div>
+                <div class="col d-flex justify-content-end">
+                    {{ vector_db.date }} &nbsp;&nbsp;
+                    {% if vector_db.status %}
+                    <div style="font-size:1rem;">[&nbsp;&check;&nbsp;]</div>
+                    {% else %}
+                    <div style="font-size:1rem;">
+                        <a href="{% url 'data:delete_vector_db' vector_db.directory %}">[&#128465;]</a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div>{{ vector_db.db_elements }}</div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <!------------------------------- end file list -------------------------->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if vector_dbs.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ vector_dbs.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+            {% for num in vector_dbs.paginator.page_range %}
+            <li class="page-item {% if vector_dbs.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+            {% if vector_dbs.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ vector_dbs.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ vector_dbs.paginator.num_pages }}">Last</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <br>
+    <!-- submit btn -->
+    <div class="d-grid gap-1 d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()">Back</button>
+        <div class="d-grid gap-2 d-flex justify-content-center">
+            <a class="btn btn-outline-primary" href="{% url 'chatgpt:get_chatgpt' %}">chatgpt</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

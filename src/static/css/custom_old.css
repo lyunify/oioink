@@ -1,0 +1,188 @@
+/* ------------------------------------ Custom Style for Page ---------------------------------- */
+
+/* Main Pages */
+.main {
+  min-height: 100vh;
+  height: 100%;
+  background-color: #fafafa;
+}
+.header {
+  padding-top: 3px;
+  padding-bottom: 1px;
+  background-color: #ffffff;
+  border-bottom: 0px solid #dddddd;
+}
+.content {
+  padding: 20px;
+}
+.footer {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background-color: #ffffff;
+  border-bottom: 0px solid #dddddd;
+  min-height: 50px;
+}
+
+/* dropdown menu opacity */
+.dropdown-menu,
+.dropdown-item {
+  background-color: rgba(255, 255, 255, 0.9); /* Adjust the opacity value (0.9) 0=transparent 1=opaque */
+}
+.dropdown-divider {
+  color: darkgray;
+  background-color: rgba(169, 169, 169, 0.9); /* Adjust the opacity value (0.9) 0=transparent 1=opaque */
+}
+.hr-divider {
+  height: 3px;
+  color: darkgray;
+}
+
+.user-message {
+  text-align: justify;
+  width: 100%;
+  color: white;
+  background-color: #2b313e;
+}
+.ai-message {
+  text-align: justify;
+  width: 100%;
+  color: white;
+  background-color: #475063;
+}
+
+/* form */
+.auth-form {
+  max-width: 500px;
+  margin: auto;
+}
+.auth-form .form-control {
+  position: relative;
+}
+
+.message-form {
+  width: 100%;
+  max-width: 700px;
+  padding: 15px;
+  margin: auto;
+  text-align: justify;
+}
+.message-form input[type="text"] {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.search-form {
+  width: 100%;
+  max-width: 500px;
+  padding: 15px;
+  margin: auto;
+}
+.search-form input[type="search"] {
+  margin-bottom: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.h3 {
+  text-align: center;
+}
+.h4 {
+  text-align: center;
+}
+
+#notice-msg {
+  text-align: center;
+}
+#alert-msg {
+  text-align: center;
+}
+
+#responsive-image {
+  width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+mark {
+  background-color: yellow;
+  color: black;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* General Pages */
+.container-text {
+  width: 60%;
+  text-align: justify;
+  padding: 20px;
+}
+.container-text-scoll {
+  height: 400px;
+  width: 60%;
+  overflow-y: scroll;
+  display: block;
+  text-align: justify;
+  padding: 20px;
+  border: 1px solid royalblue;
+}
+
+.table-info {
+  width: 60%;
+}
+
+/* --------------------------------------------------------------------------------------------- */
+
+/* Calendar Pages */
+.left {
+  float: left;
+}
+.right {
+  float: right;
+}
+.clearfix {
+  margin: 15px;
+}
+.form {
+  margin: auto;
+}
+.form input,
+.form select,
+.form textarea {
+  border-radius: 5px;
+  border: 1px solid #17a2b8;
+  outline: none;
+  background: none;
+  padding: 5px;
+  width: 100%;
+}
+.calendar {
+  width: 75%;
+  margin: auto;
+  font-size: 10px;
+}
+.calendar tr,
+.calendar td {
+  border: 1px solid lightgrey;
+}
+.calendar th {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+.calendar td {
+  width: 100px;
+  height: 75px;
+  padding: 20px 5px 5px 5px;
+}
+.month {
+  font-size: 20px;
+}
+.date {
+  font-size: 15px;
+}
+ul {
+  height: 100%;
+  padding: 5px 5px 5px 20px;
+}

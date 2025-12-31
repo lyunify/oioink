@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">{{ title|default:"Add Saving" }}</h4>
+                </div>
+                <div class="card-body">
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.date.id_for_label }}" class="form-label">{{ form.date.label }}</label>
+                            {{ form.date }}
+                            {% if form.date.errors %}
+                            <div class="text-danger small">{{ form.date.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.amount.id_for_label }}" class="form-label">{{ form.amount.label }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                {{ form.amount }}
+                            </div>
+                            {% if form.amount.errors %}
+                            <div class="text-danger small">{{ form.amount.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.description.id_for_label }}" class="form-label">{{ form.description.label }}</label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                            <div class="text-danger small">{{ form.description.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.saving_goal.id_for_label }}" class="form-label">{{ form.saving_goal.label }}</label>
+                            {{ form.saving_goal }}
+                            {% if form.saving_goal.errors %}
+                            <div class="text-danger small">{{ form.saving_goal.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Optional: Link this saving to a saving goal</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.goal.id_for_label }}" class="form-label">{{ form.goal.label }}</label>
+                            {{ form.goal }}
+                            {% if form.goal.errors %}
+                            <div class="text-danger small">{{ form.goal.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Optional: Legacy field (deprecated, use Saving Goal above instead)</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.child_name.id_for_label }}" class="form-label">{{ form.child_name.label }}</label>
+                            {{ form.child_name }}
+                            {% if form.child_name.errors %}
+                            <div class="text-danger small">{{ form.child_name.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Optional: Enter the child's name for this saving</small>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'tracking:saving_list' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

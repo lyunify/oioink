@@ -1,0 +1,65 @@
+{% load static %}
+
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+        <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+        <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+        <li data-bs-target="#myCarousel" data-bs-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="{% static 'images/myhome/cover/cover.jpg' %}" class="d-block w-100" id="responsive-image"
+                alt="OiOink">
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h4>Generative AI</h4>
+                    <p>Using Generative AI for optimal business solutions</p>
+                    <p><a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Sign up today</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/myhome/cover/cover.jpg' %}" class="d-block w-100" id="responsive-image"
+                alt="OiOink">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h4>Proprietary Data</h4>
+                    <p>Using your private proprietary data to enhance LLM/GPT models for efficiency and effectiveness
+                    </p>
+                    <p><a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Learn more</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/myhome/cover/cover.jpg' %}" class="d-block w-100" id="responsive-image"
+                alt="OiOink">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h4>Automation</h4>
+                    <p>Using fully-integrated automated processes for efficient workflows</p>
+                    <p><a class="btn btn-primary" href="{% url 'accounts:signup' %}" role="button">Learn more</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="{% static 'images/myhome/cover/cover.jpg' %}" class="d-block w-100" id="responsive-image"
+                alt="OiOink">
+            <div class="container">
+                <div class="carousel-caption text-end">
+                    <h4>Enquiry</h4>
+                    <p>Please contact us for our products and services</p>
+                    <p><a class="btn btn-primary" href="{% url 'myhome:contact' %}" role="button">Contact us</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </a>
+</div>

@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <!-- Breadcrumb navigation -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'tracking:saving_goal_list' %}">Saving Goals</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ saving_goal.goal_name }}</li>
+                </ol>
+            </nav>
+
+            <!-- Saving goal detail card -->
+            <div class="card shadow-sm saving-goal-detail-enhanced {% if saving_goal.is_completed %}saving-goal-completed-animation{% endif %}" 
+                 style="border-left: 6px solid {{ saving_goal.color }};">
+                <div class="saving-goal-detail-header" style="background: linear-gradient(135deg, {{ saving_goal.color }} 0%, rgba(102, 126, 234, 0.8) 100%);">
+                    <div class="d-flex justify-content-between align-items-center position-relative" style="z-index: 1;">
+                        <div class="d-flex align-items-center">
+                            <span style="font-size: 3rem;" class="me-3">{{ saving_goal.icon }}</span>
+                            <div>
+                                <h3 class="mb-1 fw-bold">{{ saving_goal.goal_name }}</h3>
+                                {% if saving_goal.is_completed %}
+                                <span class="saving-goal-status-badge completed">
+                                    <i class="bi bi-check-circle-fill me-1"></i> Goal Completed! 🎉
+                                </span>
+                                {% else %}
+                                <span class="saving-goal-status-badge in-progress">
+                                    <i class="bi bi-clock-history me-1"></i> In Progress
+                                </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div>
+                            <a href="{% url 'tracking:saving_goal_edit' saving_goal.pk %}" class="btn btn-sm btn-light me-2">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a href="{% url 'tracking:saving_goal_delete' saving_goal.pk %}" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    {% if saving_goal.is_completed %}
+                    <div class="alert alert-success mb-4 d-flex align-items-center" style="border-radius: 15px;">
+                        <i class="bi bi-check-circle-fill me-2" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <strong>Congratulations! 🎉</strong><br>
+                            <small>You've successfully reached your saving goal! Great job!</small>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Enhanced progress display -->
+                    <div class="saving-goal-visual-progress mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0 fw-bold">Progress Overview</h5>
+                            <h4 class="mb-0 fw-bold" style="color: {{ saving_goal.color }};">
+                                {{ saving_goal.progress_percentage|floatformat:1 }}%
+                            </h4>
+                        </div>
+                        <div class="saving-goal-progress-bar" style="height: 40px;">
+                            <div class="progress-bar" role="progressbar" 
+                                 style="width: {{ saving_goal.progress_percentage }}%; background-color: {{ saving_goal.color }}; color: {{ saving_goal.color }};"
+                                 aria-valuenow="{{ saving_goal.progress_percentage }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                <span class="text-white fw-bold" style="font-size: 1.1rem;">{{ saving_goal.progress_percentage|floatformat:1 }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Amount statistics - enhanced display -->
+                    <div class="row mb-4">
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow-sm border-0" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                                <div class="card-body text-center text-white p-4">
+                                    <div style="font-size: 2.5rem;" class="mb-2">💰</div>
+                                    <h6 class="mb-2 opacity-75">Saved</h6>
+                                    <h2 class="mb-0 fw-bold">${{ saving_goal.current_amount|floatformat:2 }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow-sm border-0" style="background: linear-gradient(135deg, {{ saving_goal.color }} 0%, rgba(102, 126, 234, 0.8) 100%);">
+                                <div class="card-body text-center text-white p-4">
+                                    <div style="font-size: 2.5rem;" class="mb-2">🎯</div>
+                                    <h6 class="mb-2 opacity-75">Target</h6>
+                                    <h2 class="mb-0 fw-bold">${{ saving_goal.target_amount|floatformat:2 }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 shadow-sm border-0" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">
+                                <div class="card-body text-center text-white p-4">
+                                    <div style="font-size: 2.5rem;" class="mb-2">⏳</div>
+                                    <h6 class="mb-2 opacity-75">Remaining</h6>
+                                    <h2 class="mb-0 fw-bold">${{ saving_goal.remaining_amount|floatformat:2 }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <!-- Detailed information -->
+                    <div class="goal-detail-info">
+                        {% if saving_goal.description %}
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Description:</strong></div>
+                            <div class="col-sm-9">{{ saving_goal.description }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if saving_goal.child_name %}
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Child:</strong></div>
+                            <div class="col-sm-9">{{ saving_goal.child_name }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if saving_goal.deadline %}
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Deadline:</strong></div>
+                            <div class="col-sm-9">{{ saving_goal.deadline|date:"F d, Y" }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-3"><strong>Created:</strong></div>
+                            <div class="col-sm-9">{{ saving_goal.created_at|date:"F d, Y H:i" }}</div>
+                        </div>
+                        
+                        {% if saving_goal.updated_at != saving_goal.created_at %}
+                        <div class="row">
+                            <div class="col-sm-3"><strong>Last Updated:</strong></div>
+                            <div class="col-sm-9">{{ saving_goal.updated_at|date:"F d, Y H:i" }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Associated saving records -->
+                    {% if related_savings %}
+                    <hr>
+                    <h5 class="mb-3">Recent Savings for This Goal</h5>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for saving in related_savings %}
+                                <tr>
+                                    <td>{{ saving.date|date:"M d, Y" }}</td>
+                                    <td class="text-success"><strong>${{ saving.amount|floatformat:2 }}</strong></td>
+                                    <td>{{ saving.description }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'tracking:saving_list' %}?goal={{ saving_goal.pk }}" class="btn btn-outline-primary">
+                            View All Savings for This Goal
+                        </a>
+                    </div>
+                    {% else %}
+                    <hr>
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> No savings recorded for this goal yet. 
+                        <a href="{% url 'tracking:saving_create' %}" class="alert-link">Add a saving record</a> to start tracking progress!
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'tracking:saving_goal_list' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Goals
+                    </a>
+                    <a href="{% url 'tracking:saving_create' %}" class="btn btn-success">
+                        <i class="bi bi-plus-circle"></i> Add Saving to This Goal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

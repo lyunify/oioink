@@ -1,0 +1,49 @@
+{% load static %}
+
+<!-- =================================== nav_cover ======================================== -->
+
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light border-bottom shadow-md">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'images/logo/oink.jpg' %}" class="responsive-img" style="max-height:60px;" alt="Logo">
+        </a>
+        <!--
+        <div class="search-bar mt-md-2 mr-2">
+            <form method="get">
+                <input class="form-control"  type="text" name="q" id="id_q" placeholder="Search...">
+            </form>
+        </div>
+        -->
+        <div class="d-flex">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item dropdown dropleft">
+                        <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Information</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'myhome:news' %}">News</a>
+                                <a class="dropdown-item" href="{% url 'myhome:about' %}">About Us</a>
+                                <a class="dropdown-item" href="{% url 'myhome:faqs' %}">FAQs</a>
+                                <a class="dropdown-item" href="{% url 'myhome:contact' %}">Contact</a>
+                                <a class="dropdown-item" href="{% url 'myhome:support' %}">Support Us</a>
+                                <a class="dropdown-item" href="#">____________________</a>
+                                <a class="dropdown-item" href="{% url 'cal:calendar' %}">Calendar</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <a class="p-2 text-dark" href="{% url 'accounts:signin' %}">Client</a>
+                    <a class="p-2 text-dark" href="{% url 'accounts:signin' %}">Partner</a>
+                    <a class="btn btn-outline-primary" href="{% url 'myhome:home' %}">Home</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- =================================== nav_cover end ==================================== -->

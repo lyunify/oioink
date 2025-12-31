@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    <form class="profile-form" id="profile-image-form" method="post" enctype="multipart/form-data"
+        validate-username-url="{% url 'accounts:validate_username' %}">{% csrf_token %}
+        <div class="h5 text-center mb-3 font-weight-normal">Profile Image</div>
+        <!-- image edit -->
+        <div class="form-group image-group" id="id_image_group">
+            <img class="img-fluid image" src="{{ user.profile.profile_image.url }}" id="id_image_display"
+                style="max-height:200px">
+            <div class="middle">
+                <div class="text">Change Image</div>
+            </div>
+        </div>
+        <br>
+        <label class="mb-3">You can change profile picture by uploading your image file (max size 20KB):</label>
+        <div class="input-group mb-3">
+            <input type="file" name="profile_image" id="id_image_file" class="form-control" accept="image/*"
+                onchange="readURL(this)">
+            <label class="input-group-text" for="id_image_file">Profile Image</label>
+        </div>
+        <div id="id_image_error"></div>
+        <br>
+        {% if form.errors %}
+        <ul style="list-style-type:none;">
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <li>{{ error|escape }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if success_message %}
+        <div class="alert alert-success">{{ success_message }}</div>
+        {% endif %}
+        <!-- submit btn -->
+        <button type="button" class="btn btn-outline-info" onclick="javascript:history.back()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Profile Image</button>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/profile_image_size_check.js' %}"></script>
+<script src="{% static 'js/profile_image_update.js' %}"></script>
+{% endblock scripts %}

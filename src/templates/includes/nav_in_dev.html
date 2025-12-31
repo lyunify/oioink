@@ -1,0 +1,147 @@
+{% load static %}
+
+<!-- =================================== nav_in =========================================== -->
+
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light border-bottom shadow-md">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'images/logo/oink.jpg' %}" class="responsive-img" style="max-height:60px;" alt="Logo">
+        </a>
+        <div class="search-bar mt-md-2 mr-2">
+            <form method="get">
+                <input class="form-control" type="text" name="q" id="id_q" placeholder="Search...">
+            </form>
+        </div>
+        <div class="d-flex">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item dropdown dropleft">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Data</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'data:file_upload' %}">File Upload</a>
+                                <a class="dropdown-item" href="{% url 'data:web_base_upload' %}">Web Content Upload</a>
+                                <a class="dropdown-item" href="{% url 'data:online_pdf_upload' %}">Online PDF Upload</a>
+                                <a class="dropdown-item" href="{% url 'data:csv_upload' %}">CSV Upload</a>
+                                <a class="dropdown-item" href="{% url 'data:directory_upload' %}">Multiple File Upload</a>
+                                <a class="dropdown-item" href="#">____________________</a>
+                                <a class="dropdown-item" href="{% url 'data:vector_db_list' %}">Vector DB List</a>
+                                <a class="dropdown-item" href="{% url 'data:llm_settings' %}">LLM Settings</a>
+                                <a class="dropdown-item" href="#">____________________</a>
+                                <!-- not needed for now
+                                <a class="dropdown-item" href="{% url 'data:file_list' %}">File List</a>
+                                <a class="dropdown-item" href="{% url 'data:vector_db' %}">Create Vector DB</a>
+                                -->
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown dropleft">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">ChatGPT</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'chatgpt:get_chatgpt' %}">ChatGPT</a>
+                                <a class="dropdown-item" href="{% url 'chatgpt:chatgpt_list' %}">ChatGPT List</a>
+                                <a class="dropdown-item" href="{% url 'chatgpt:chatgpt_history' %}">ChatGPT History</a>
+                                <a class="dropdown-item" href="{% url 'chatgpt:export_chatgpt_history' %}">Export History</a>
+                                <a class="dropdown-item" href="#">____________________</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown dropleft">
+                        <a class="nav-link dropdown-toggle" href="#" id="trackingDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Oinklog</a>
+                        <ul class="dropdown-menu lessons-dropdown" aria-labelledby="trackingDropdown">
+                            <!-- Spending Submenu -->
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item lessons-menu-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="lesson-icon">💰</span>
+                                    <span class="lesson-text">Spending</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item lessons-menu-item" href="{% url 'tracking:spending_list' %}">
+                                            <span class="lesson-icon">📋</span>
+                                            <span class="lesson-text">Spending List</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item lessons-menu-item" href="{% url 'tracking:spending_create' %}">
+                                            <span class="lesson-icon">➕</span>
+                                            <span class="lesson-text">Add Spending</span>
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item lessons-menu-item" href="{% url 'tracking:spending_dashboard' %}">
+                                            <span class="lesson-icon">📊</span>
+                                            <span class="lesson-text">Dashboard</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- Saving Submenu -->
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item lessons-menu-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="lesson-icon">🐷</span>
+                                    <span class="lesson-text">Saving</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item lessons-menu-item" href="{% url 'tracking:saving_list' %}">
+                                            <span class="lesson-icon">📋</span>
+                                            <span class="lesson-text">Saving List</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item lessons-menu-item" href="{% url 'tracking:saving_create' %}">
+                                            <span class="lesson-icon">➕</span>
+                                            <span class="lesson-text">Add Saving</span>
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <a class="dropdown-item lessons-menu-item" href="{% url 'tracking:saving_dashboard' %}">
+                                            <span class="lesson-icon">📊</span>
+                                            <span class="lesson-text">Dashboard</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown dropleft">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ user.username }}
+                            <img class="img-fluid image" src="{{ user.profile.profile_image.url }}"
+                                style="border-radius:50%;max-width:35px;max-height:35px;">
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'accounts:account' %}">Account</a>
+                                <a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a>
+                                <a class="dropdown-item" href="{% url 'accounts:settings' %}">Settings</a>
+                                <a class="dropdown-item" href="#">____________________</a>
+                                <a class="dropdown-item" href="{% url 'cal:calendar' %}">Calendar</a>
+                                <a class="dropdown-item" href="#">____________________</a>
+                                <a class="dropdown-item" href="{% url 'accounts:signout' %}">Sign Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="btn btn-outline-primary" href="{% url 'myhome:home' %}">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- =================================== nav_in end ======================================= -->

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    {% if success_message %}
+    <div style="color:green; text-align: center;">{{ success_message }}</div>
+    {% endif %}
+    <form class="profile-form" id="profile-form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="h5 text-center mb-3 font-weight-normal">Profile</div>
+        <!-- image -->
+        <div class="m-auto" id="notice-msg">
+            <img class="img-fluid image" src="{{ user.profile.profile_image.url }}"
+                style="border-radius:50%;height:80px">
+            <br>
+            <a class="m-auto" href="{% url 'accounts:profile_image_update' %}">Profile Image Update</a>
+        </div>
+        <br>
+        <!-- profile details -->
+        <div class="row">
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" name="first_name" id="id_first_name" class="form-control"
+                        placeholder="First Name*" value="{{ user.profile.first_name }}" required autofocus>
+                    <label for="id_first_name">First Name</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Last Name*"
+                        value="{{ user.profile.last_name }}" required>
+                    <label for="id_last_name">Last Name</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="tel" name="phone" id="id_phone" class="form-control" placeholder="Phone*"
+                        pattern="^\+?[1-9]\d{10,14}$" value="{{ user.profile.phone }}" required>
+                    <label for="id_phone">Phone</label>
+                    <span id="id_phone_help" class="form-text">
+                        No spaces, dashes, or dots. E.g. +16505551212</span>
+                    <span id="id_phone_error"></span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" name="address" id="id_address" class="form-control" placeholder="Address*"
+                        value="{{ user.profile.address }}">
+                    <label for="id_address">Address</label>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <div class="form-floating mb-3">
+                    <input type="text" name="city" id="id_city" class="form-control" placeholder="City*"
+                        value="{{ user.profile.city }}">
+                    <label for="id_city">City</label>
+                </div>
+            </div>
+            <div class="col">
+                {% if user.profile.country %}
+                <div class="form-floating mb-3">
+                    <input type="text" name="country" id="id_country" class="form-control" placeholder="Country*"
+                        value="{{ user.profile.country }}">
+                    <label for="id_country">Country</label>
+                </div>
+                {% else %}
+                <label for="id_country">Country</label>
+                <select name="country" id="id_country" class="form-control form-select" aria-label="Default select"
+                    required>
+                    <!-- JS to dynamically generate select dropdown -->
+                </select>
+                {% endif %}
+            </div>
+        </div>
+        {% if form.errors %}
+        <ul style="list-style-type:none;">
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <li>{{ error|escape }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if success_message %}
+        <div class="alert alert-success">{{ success_message }}</div>
+        {% endif %}
+        <!-- submit btn -->
+        <button type="button" class="btn btn-outline-info" onclick="javascript:history.back()">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock scripts %}

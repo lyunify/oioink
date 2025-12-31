@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    <div class="h5 text-center mb-3 font-weight-normal">File List for Uploaded Files</div>
+
+    <!------------------------------- file list ------------------------------>
+    <div class="d-grid d-flex justify-content-center">
+        List of data files for custom data sets. Delete unwanted files.
+    </div>
+    <br>
+    <ul class="list-group">
+        {% for uploaded_file in uploaded_files %}
+        <li class="list-group-item">
+            <div class="row">
+                <!-- <div>{{ uploaded_file.doc_file }}</div> -->
+                <div class="col">{{ uploaded_file.file }}</div>
+                <div class="col d-flex justify-content-end">
+                    {{ uploaded_file.date }} &nbsp;&nbsp;
+                    <div style="font-size:1rem;">
+                        <a href="{% url 'data:delete_file' uploaded_file.file %}">[&#128465;]</a>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    <br>
+    <div class="d-grid d-flex justify-content-center">{{ status_message }}</div>
+    <!-- <div id="notice-msg">{{ status_message }}</div> -->
+    <br>
+    <!------------------------------- end file list -------------------------->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if uploaded_files.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">First</a></li>
+            <li class="page-item"><a class="page-link"
+                    href="?page={{ uploaded_files.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+            {% for num in uploaded_files.paginator.page_range %}
+            <li class="page-item {% if uploaded_files.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+            {% if uploaded_files.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ uploaded_files.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ uploaded_files.paginator.num_pages }}">Last</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <br>
+    <!-- submit btn -->
+    <div class="d-grid gap-1 d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()">Back</button>
+        <div class="d-grid gap-2 d-flex justify-content-center">
+            <a class="btn btn-outline-primary" href="{% url 'data:vector_db' %}">Create Vector DB</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

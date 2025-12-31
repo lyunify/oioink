@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Breadcrumb navigation -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'wallet:wallet_list' %}">Wallet List</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Wallet Detail</li>
+                </ol>
+            </nav>
+
+            <!-- Wallet detail card -->
+            <div class="card shadow-sm wallet-detail-card {% if wallet.is_practice_mode %}practice-wallet-card{% else %}real-wallet-card{% endif %}">
+                {% if wallet.is_practice_mode %}
+                <div class="practice-mode-banner">
+                    <div class="d-flex align-items-center justify-content-center p-3" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); color: white; border-radius: 15px 15px 0 0;">
+                        <i class="bi bi-pencil-square me-2" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h5 class="mb-0"><strong>PRACTICE MODE WALLET</strong></h5>
+                            <small>This wallet is for practice and learning. Your transactions here don't affect your real balance.</small>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="card-header {% if wallet.is_practice_mode %}bg-info{% else %}bg-success{% endif %} text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Wallet Details</h4>
+                        <div>
+                            <a href="{% url 'wallet:wallet_edit' wallet.pk %}" class="btn btn-sm btn-light me-2">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a href="{% url 'wallet:wallet_delete' wallet.pk %}" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <h1 class="display-4 wallet-detail-balance mb-3">{{ wallet.coin_icon }} {{ balance|floatformat:2 }}</h1>
+                            <span class="badge {% if wallet.is_practice_mode %}bg-info{% else %}bg-success{% endif %}">
+                                {{ wallet.coin_icon }} {{ wallet.coin_name }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="wallet-detail-info">
+                        {% if wallet.child_name %}
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Child:</strong></div>
+                            <div class="col-sm-8">{{ wallet.child_name }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Coin Name:</strong></div>
+                            <div class="col-sm-8">{{ wallet.coin_icon }} {{ wallet.coin_name }}</div>
+                        </div>
+                        
+                        {% if wallet.is_practice_mode %}
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Mode:</strong></div>
+                            <div class="col-sm-8">
+                                <span class="badge bg-info">
+                                    <i class="bi bi-pencil-square"></i> Practice Mode
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Balance:</strong></div>
+                            <div class="col-sm-8"><strong>{{ wallet.coin_icon }} {{ balance|floatformat:2 }}</strong></div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Total Income:</strong></div>
+                            <div class="col-sm-8 text-success">{{ wallet.coin_icon }} {{ statistics.total_income|floatformat:2 }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Total Expense:</strong></div>
+                            <div class="col-sm-8 text-danger">{{ wallet.coin_icon }} {{ statistics.total_expense|floatformat:2 }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Transactions:</strong></div>
+                            <div class="col-sm-8">{{ statistics.transaction_count }} record{{ statistics.transaction_count|pluralize }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Created:</strong></div>
+                            <div class="col-sm-8">{{ wallet.created_at|date:"F d, Y H:i" }}</div>
+                        </div>
+                        
+                        {% if wallet.updated_at != wallet.created_at %}
+                        <div class="row">
+                            <div class="col-sm-4"><strong>Last Updated:</strong></div>
+                            <div class="col-sm-8">{{ wallet.updated_at|date:"F d, Y H:i" }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'wallet:wallet_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+                        <div>
+                            <a href="{% url 'wallet:transaction_list' wallet.pk %}" class="btn btn-primary me-2">
+                                <i class="bi bi-list"></i> View Transactions
+                            </a>
+                            <a href="{% url 'wallet:transaction_create' wallet.pk %}" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> Add Transaction
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent transactions -->
+            {% if recent_transactions %}
+            <div class="card shadow-sm mt-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Recent Transactions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in recent_transactions %}
+                                <tr>
+                                    <td>{{ transaction.date|date:"M d, Y" }}</td>
+                                    <td>
+                                        {% if transaction.transaction_type == 'income' %}
+                                        <span class="badge bg-success">Income</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Expense</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ wallet.coin_icon }} {{ transaction.amount|floatformat:2 }}</td>
+                                    <td>{{ transaction.description }}</td>
+                                    <td>
+                                        <a href="{% url 'wallet:transaction_detail' transaction.pk %}" class="btn btn-sm btn-outline-primary">
+                                            View
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="{% url 'wallet:transaction_list' wallet.pk %}" class="btn btn-outline-primary">
+                            View All Transactions
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

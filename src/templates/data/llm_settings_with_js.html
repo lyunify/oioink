@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    <form class="llm-settings-form" id="llm-settings-form" method="post" enctype="multipart/form-data"
+        status_message="{{ status_message }}">{% csrf_token %}
+        <div class="h5 text-center mb-3 font-weight-normal">LLM / Vector Database Settings</div>
+
+        <!---------------------------- settings ------------------------------>
+        <h5>LLM</h5>
+        <!-- llm -->
+        <div class="row mb-3">
+            <div class="col">
+                {% if form.initial.llm %}
+                <label for="id_llm" class="form-label">LLM*</label>
+                <input type="text" name="llm" id="id_llm" class="form-control" placeholder="LLM"
+                    value="{{ form.initial.llm }}">
+                {% else %}
+                <label for="id_llm">LLM*</label>
+                <select name="llm" id="id_llm" class="form-control form-select" aria-label="Default select" required>
+                    <!-- JS to dynamically generate select dropdown -->
+                    <option value="openai">openai</option>
+                </select>
+                {% endif %}
+            </div>
+            <div class="col">
+                <label for="id_llm_api_key" class="form-label">LLM API Key*</label>
+                <input type="text" name="llm_api_key" id="id_llm_api_key" class="form-control" placeholder="LLM API Key"
+                    value="{{ form.initial.llm_api_key }}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="id_llm_model" class="form-label">LLM Model*</label>
+                <input type="text" name="llm_model" id="id_llm_model" class="form-control" placeholder="LLM Model"
+                    value="{{ form.initial.llm_model }}">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <br>
+        <h5>Vector Database</h5>
+        <!-- vector database -->
+        <div class="row mb-3">
+            <div class="col">
+                {% if form.initial.vector_db %}
+                <label for="id_vector_db" class="form-label">Vector DB*</label>
+                <input type="text" name="vector_db" id="id_vector_db" class="form-control" placeholder="Vector DB"
+                    value="{{ form.initial.vector_db }}">
+                {% else %}
+                <label for="id_vector_db">Vector DB*</label>
+                <select name="vector_db" id="id_vector_db" class="form-control form-select" aria-label="Default select"
+                    required>
+                    <!-- JS to dynamically generate select dropdown -->
+                    <option value="chroma">chroma</option>
+                    <option value="faiss">faiss</option>
+                </select>
+                {% endif %}
+            </div>
+            <div class="col">
+                <label for="id_vector_api_key" class="form-label">Vector API Key*</label>
+                <input type="text" name="vector_api_key" id="id_vector_api_key" class="form-control"
+                    placeholder="Vector API Key" value="{{ form.initial.vector_api_key }}">
+            </div>
+        </div>
+        <div class="d-grid d-flex justify-content-center">{{ status_message }}</div>
+        <br>
+        <!---------------------------- end settings -------------------------->
+
+        {% if form.errors %}
+        <ul style="list-style-type:none;">
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- submit btn -->
+        <div class="d-grid gap-1 d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()">Back</button>
+            <div class="d-grid gap-2 d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success">Save</button>
+                <a class="btn btn-outline-primary" href="{% url 'data:file_upload' %}">Next</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/llm_settings.js' %}"></script>
+{% endblock scripts %}

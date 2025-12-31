@@ -1,0 +1,121 @@
+{% load static %}
+
+<div class="landing-page-modern">
+    <!-- Hero Section -->
+    <section class="landing-hero">
+        <div class="landing-hero-background"></div>
+        <div class="container">
+            <div class="landing-hero-content">
+                <div class="landing-hero-badge">
+                    <span>💰 Financial Education for Kids</span>
+                </div>
+                <h1 class="landing-hero-title">
+                    Make Learning About Money
+                    <span class="landing-hero-title-highlight">Fun & Easy</span>
+                </h1>
+                <p class="landing-hero-description">
+                    OiOink helps children aged 6-12 learn financial literacy through interactive lessons, 
+                    virtual wallets, saving goals, and exciting achievements!
+                </p>
+                <div class="landing-hero-actions">
+                    <a href="{% url 'accounts:signup' %}" class="btn-landing-primary">
+                        <span>Get Started Free</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                    <a href="{% url 'accounts:signin' %}" class="btn-landing-secondary">
+                        Sign In
+                    </a>
+                </div>
+                <div class="landing-hero-features">
+                    <div class="hero-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Free to use</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Safe & secure</span>
+                    </div>
+                    <div class="hero-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Fun & engaging</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="landing-hero-decoration">
+            <div class="decoration-circle decoration-circle-1"></div>
+            <div class="decoration-circle decoration-circle-2"></div>
+            <div class="decoration-circle decoration-circle-3"></div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="landing-features">
+        <div class="container">
+            <div class="landing-section-header">
+                <h2 class="landing-section-title">Why Choose OiOink?</h2>
+                <p class="landing-section-subtitle">Everything your child needs to learn about money</p>
+            </div>
+            <div class="landing-features-grid">
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <i class="bi bi-book"></i>
+                    </div>
+                    <h3 class="landing-feature-title">Interactive Lessons</h3>
+                    <p class="landing-feature-text">Learn about saving, spending, and budgeting through fun, age-appropriate lessons</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <i class="bi bi-wallet2"></i>
+                    </div>
+                    <h3 class="landing-feature-title">Virtual Wallets</h3>
+                    <p class="landing-feature-text">Practice managing money safely with virtual coins and practice mode</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <i class="bi bi-bullseye"></i>
+                    </div>
+                    <h3 class="landing-feature-title">Saving Goals</h3>
+                    <p class="landing-feature-text">Set goals and track progress with visual progress bars and celebrations</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <i class="bi bi-trophy"></i>
+                    </div>
+                    <h3 class="landing-feature-title">Achievements</h3>
+                    <p class="landing-feature-text">Earn badges and unlock rewards for completing lessons and goals</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <i class="bi bi-gift"></i>
+                    </div>
+                    <h3 class="landing-feature-title">Prize Shop</h3>
+                    <p class="landing-feature-text">Redeem virtual coins for exciting prizes and rewards</p>
+                </div>
+                <div class="landing-feature-card">
+                    <div class="landing-feature-icon">
+                        <i class="bi bi-graph-up"></i>
+                    </div>
+                    <h3 class="landing-feature-title">Track Progress</h3>
+                    <p class="landing-feature-text">Monitor spending, savings, and learning progress with beautiful charts</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="landing-cta">
+        <div class="container">
+            <div class="landing-cta-content">
+                <h2 class="landing-cta-title">Ready to Start Learning?</h2>
+                <p class="landing-cta-description">Join OiOink today and help your child build smart money habits!</p>
+                <div class="landing-cta-actions">
+                    <a href="{% url 'accounts:signup' %}" class="btn-landing-cta">
+                        <span>Create Free Account</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

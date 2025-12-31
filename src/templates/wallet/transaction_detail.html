@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Breadcrumb navigation -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'wallet:wallet_list' %}">Wallet List</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'wallet:wallet_detail' transaction.wallet.pk %}">{{ transaction.wallet.coin_icon }} {{ transaction.wallet.coin_name }}</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'wallet:transaction_list' transaction.wallet.pk %}">Transactions</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Transaction Detail</li>
+                </ol>
+            </nav>
+
+            <!-- Transaction detail card -->
+            <div class="card shadow-sm transaction-detail-card">
+                <div class="card-header {% if transaction.transaction_type == 'income' %}bg-success{% else %}bg-danger{% endif %} text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="mb-0">Transaction Details</h4>
+                        <div>
+                            <a href="{% url 'wallet:transaction_edit' transaction.pk %}" class="btn btn-sm btn-light me-2">
+                                <i class="bi bi-pencil"></i> Edit
+                            </a>
+                            <a href="{% url 'wallet:transaction_delete' transaction.pk %}" class="btn btn-sm btn-light">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            {% if transaction.transaction_type == 'income' %}
+                            <h1 class="display-4 transaction-detail-amount text-success mb-3">
+                                +{{ transaction.wallet.coin_icon }} {{ transaction.amount|floatformat:2 }}
+                            </h1>
+                            <span class="badge bg-success">Income</span>
+                            {% else %}
+                            <h1 class="display-4 transaction-detail-amount text-danger mb-3">
+                                -{{ transaction.wallet.coin_icon }} {{ transaction.amount|floatformat:2 }}
+                            </h1>
+                            <span class="badge bg-danger">Expense</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="transaction-detail-info">
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Wallet:</strong></div>
+                            <div class="col-sm-8">
+                                <a href="{% url 'wallet:wallet_detail' transaction.wallet.pk %}">
+                                    {{ transaction.wallet.coin_icon }} {{ transaction.wallet.coin_name }}
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Description:</strong></div>
+                            <div class="col-sm-8">{{ transaction.description }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Date:</strong></div>
+                            <div class="col-sm-8">{{ transaction.date|date:"F d, Y" }}</div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Created:</strong></div>
+                            <div class="col-sm-8">{{ transaction.created_at|date:"F d, Y H:i" }}</div>
+                        </div>
+                        
+                        {% if transaction.updated_at != transaction.created_at %}
+                        <div class="row">
+                            <div class="col-sm-4"><strong>Last Updated:</strong></div>
+                            <div class="col-sm-8">{{ transaction.updated_at|date:"F d, Y H:i" }}</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'wallet:transaction_list' transaction.wallet.pk %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Transactions
+                        </a>
+                        <a href="{% url 'wallet:wallet_detail' transaction.wallet.pk %}" class="btn btn-info">
+                            <i class="bi bi-wallet"></i> View Wallet
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+

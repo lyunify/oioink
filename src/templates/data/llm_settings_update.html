@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    <form class="llm-settings-form" id="llm-settings-form" method="post" enctype="multipart/form-data"
+        status_message="{{ status_message }}">{% csrf_token %}
+        <div class="h5 text-center mb-3 font-weight-normal">LLM / Vector Database Settings</div>
+
+        <!---------------------------- settings ------------------------------>
+        <h5>LLM</h5>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="id_llm_model" class="form-label">LLM Model*</label>
+                <select name="llm_model" id="id_llm_model" class="form-control form-select" aria-label="Default select"
+                    required>
+                    <!-- JS to dynamically generate select dropdown -->
+                    <option value="" disabled>-- openai gpt-4 --</option>
+                    <option value="openai gpt-4-turbo-preview">gpt-4-turbo-preview (recommended)</option>
+                    <option value="openai gpt-4-0125-preview">gpt-4-0125-preview</option>
+                    <option value="openai gpt-4-1106-preview">gpt-4-1106-preview</option>
+                    <option value="openai gpt-4-vision-preview">openai gpt-4-vision-preview</option>
+                    <option value="openai gpt-4">openai gpt-4</option>
+                    <option value="openai gpt-4-32k">openai gpt-4-32k</option>
+                    <option value="openai gpt-4-0613">openai gpt-4-0613</option>
+                    <option value="openai gpt-4-32k-0613">openai gpt-4-32k-0613</option>
+                    <option value="" disabled>-- openai gpt-3.5 --</option>
+                    <option value="openai gpt-3.5-turbo">openai gpt-3.5-turbo (classic)</option>
+                    <option value="openai gpt-3.5-turbo-0125">openai gpt-3.5-turbo-0125</option>
+                    <option value="openai gpt-3.5-turbo-1106">openai gpt-3.5-turbo-1106</option>
+                    <option value="openai gpt-3.5-turbo-instruct">openai gpt-3.5-turbo-instruct</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="id_llm_temperature" class="form-label">LLM Temperature*</label>
+                <select name="llm_temperature" id="id_llm_temperature" class="form-control form-select"
+                    aria-label="Default select" required>
+                    <!-- JS to dynamically generate select dropdown -->
+                    <option value="0.0">0.0 (recommended)</option>
+                    <option value="0.1">0.1</option>
+                    <option value="0.2">0.2</option>
+                    <option value="0.3">0.3</option>
+                    <option value="0.4">0.4</option>
+                    <option value="0.5">0.5</option>
+                    <option value="0.6">0.6</option>
+                    <option value="0.7">0.7</option>
+                    <option value="0.8">0.8</option>
+                    <option value="0.9">0.9</option>
+                    <option value="1.0">1.0</option>
+                    <option value="1.1">1.1</option>
+                    <option value="1.2">1.2</option>
+                    <option value="1.3">1.3</option>
+                    <option value="1.4">1.4</option>
+                    <option value="1.5">1.5</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <h5>Vector Database / Search Engine</h5>
+        <!-- vector database -->
+        <div class="row mb-3">
+            <div class="col">
+                <label for="id_vector_db">Vector DB*</label>
+                <select name="vector_db" id="id_vector_db" class="form-control form-select" aria-label="Default select"
+                    required>
+                    <!-- JS to dynamically generate select dropdown -->
+                    <option value="chroma">chroma (recommended)</option>
+                    <option value="faiss">faiss</option>
+                </select>
+            </div>
+            <div class="col">
+                <label for="id_search_engine" class="form-label">Search Engine</label>
+                <select name="search_engine" id="id_search_engine" class="form-control form-select" aria-label="Default select"
+                    required>
+                    <!-- JS to dynamically generate select dropdown -->
+                    <option value="duckduckgo">duckduckgo (recommended)</option>
+                    <option value="google">google</option>
+                    <option value="tavily">tavily</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-grid d-flex justify-content-center">{{ status_message }}</div>
+        <br>
+        <!---------------------------- end settings -------------------------->
+
+        {% if form.errors %}
+        <ul style="list-style-type:none;">
+            {% for field in form %}
+            {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <li>{{field.label}}: {{ error|escape }}</li>
+            </div>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <!-- submit btn -->
+        <div class="d-grid gap-1 d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()">Back</button>
+            <div class="d-grid gap-2 d-flex justify-content-center">
+                <button type="submit" class="btn btn-outline-success">Save</button>
+                <a class="btn btn-outline-primary" href="{% url 'data:file_upload' %}">Next</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/llm_settings.js' %}"></script>
+{% endblock scripts %}

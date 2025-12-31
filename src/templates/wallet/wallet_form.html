@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">{{ title|default:"Create Wallet" }}</h4>
+                </div>
+                <div class="card-body">
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.child_name.id_for_label }}" class="form-label">{{ form.child_name.label }}</label>
+                            {{ form.child_name }}
+                            {% if form.child_name.errors %}
+                            <div class="text-danger small">{{ form.child_name.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.child_name.help_text }}</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.coin_name.id_for_label }}" class="form-label">{{ form.coin_name.label }}</label>
+                            {{ form.coin_name }}
+                            {% if form.coin_name.errors %}
+                            <div class="text-danger small">{{ form.coin_name.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.coin_name.help_text }}</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.coin_icon.id_for_label }}" class="form-label">{{ form.coin_icon.label }}</label>
+                            {{ form.coin_icon }}
+                            {% if form.coin_icon.errors %}
+                            <div class="text-danger small">{{ form.coin_icon.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">{{ form.coin_icon.help_text }}</small>
+                        </div>
+                        
+                        <hr class="my-4">
+                        
+                        <div class="mb-3">
+                            <div class="form-check">
+                                {{ form.is_practice_mode }}
+                                <label for="{{ form.is_practice_mode.id_for_label }}" class="form-check-label">
+                                    {{ form.is_practice_mode.label }}
+                                </label>
+                                <small class="form-text text-muted d-block">Enable practice mode for learning without real transactions</small>
+                            </div>
+                            {% if form.is_practice_mode.errors %}
+                            <div class="text-danger small">{{ form.is_practice_mode.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3" id="practice-balance-field" style="display: none;">
+                            <label for="{{ form.practice_initial_balance.id_for_label }}" class="form-label">{{ form.practice_initial_balance.label }}</label>
+                            {{ form.practice_initial_balance }}
+                            {% if form.practice_initial_balance.errors %}
+                            <div class="text-danger small">{{ form.practice_initial_balance.errors }}</div>
+                            {% endif %}
+                            {% if form.practice_initial_balance.help_text %}
+                            <small class="form-text text-muted">{{ form.practice_initial_balance.help_text }}</small>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'wallet:wallet_list' %}" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-info">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    // Show/hide practice initial balance field based on practice mode checkbox
+    document.addEventListener('DOMContentLoaded', function() {
+        const practiceModeCheckbox = document.getElementById('{{ form.is_practice_mode.id_for_label }}');
+        const practiceBalanceField = document.getElementById('practice-balance-field');
+        
+        if (!practiceModeCheckbox || !practiceBalanceField) return;
+        
+        function togglePracticeBalanceField() {
+            if (practiceModeCheckbox.checked) {
+                practiceBalanceField.style.display = 'block';
+            } else {
+                practiceBalanceField.style.display = 'none';
+            }
+        }
+        
+        // Initial state
+        togglePracticeBalanceField();
+        
+        // Toggle on change
+        practiceModeCheckbox.addEventListener('change', togglePracticeBalanceField);
+    });
+</script>
+{% endblock scripts %}

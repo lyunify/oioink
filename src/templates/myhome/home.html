@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+{% if request.user.is_authenticated %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/homepage_modern.css' %}">
+{% else %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/landing_page.css' %}">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<!-- =================================== body content ===================================== -->
+{% if request.user.is_authenticated %}
+{% include 'myhome/includes/home_in.html' %}
+{% else %}
+{% include 'myhome/includes/home_cover.html' %}
+{% endif %}
+<!-- =================================== body content end ================================= -->
+
+{% endblock content %}

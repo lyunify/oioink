@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- =================================== header content =================================== -->
+    {% include 'includes/head.html' %}
+    {% block extra_css %}{% endblock %}
+    <!-- =================================== header content =================================== -->
+</head>
+
+<body>
+    <header>
+        <!-- =================================== header content =================================== -->
+        {% include 'includes/header.html' %}
+        <!-- =================================== header content end =============================== -->
+    </header>
+    <!-- =================================== body content ===================================== -->
+    <div class="container-fluid">
+        <div class="main">
+            <div id="alert-msg"></div>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+    <br>
+    <!-- =================================== body content end ================================= -->
+    <footer>
+        <!-- =================================== footer content =================================== -->
+        {% include 'includes/footer.html' %}
+        <!-- =================================== footer content end =============================== -->
+    </footer>
+    <!-- Custom JS -->
+    {% block scripts %}
+    {% endblock scripts %}
+    
+    <!-- Achievement notification system (logged-in users only) -->
+    {% if user.is_authenticated %}
+    <script src="{% static 'js/achievement_notification.js' %}"></script>
+    {% endif %}
+</body>
+
+</html>

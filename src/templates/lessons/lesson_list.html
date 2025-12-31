@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load lessons_tags %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4">Financial Lessons</h1>
+            <p class="text-center text-muted mb-5">Learn about money and become a smart saver!</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if lessons_with_progress %}
+            {% for item in lessons_with_progress %}
+            {% with lesson=item.lesson status=item.status %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card lesson-card h-100 shadow-sm {% if status == 'completed' %}border-success{% elif status == 'in_progress' %}border-warning{% endif %}">
+                    <a href="{% url 'lessons:lesson_detail' lesson.slug %}" class="lesson-card-link">
+                        {% if lesson.cover_image %}
+                        <img src="{{ lesson.cover_image.url }}" class="card-img-top lesson-cover-image" alt="{{ lesson.title }}">
+                        {% else %}
+                        <div class="card-img-top d-flex align-items-center justify-content-center lesson-default-cover {% if status == 'completed' %}opacity-75{% endif %}">
+                            {% if lesson.icon %}
+                            <span class="lesson-default-cover-icon">{{ lesson.icon|render_icon|safe }}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-primary me-2">Lesson {{ lesson.lesson_number }}</span>
+                                    <span class="text-muted small">Ages {{ lesson.age_range }}</span>
+                                </div>
+                                {% if status == 'completed' %}
+                                <span class="badge bg-success"><i class="bi bi-check-circle"></i> Completed</span>
+                                {% elif status == 'in_progress' %}
+                                <span class="badge bg-warning text-dark"><i class="bi bi-clock"></i> In Progress</span>
+                                {% endif %}
+                            </div>
+                            <h5 class="card-title">{% if lesson.icon %}{{ lesson.icon|render_icon|safe }} {% endif %}{{ lesson.title }}</h5>
+                            {% if lesson.subtitle %}
+                            <p class="card-text text-muted">{{ lesson.subtitle }}</p>
+                            {% endif %}
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock"></i> {{ lesson.duration_minutes }} min
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endwith %}
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <p class="mb-0">Lessons are coming soon! Stay tuned!</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            {% for lesson in lessons %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card lesson-card h-100 shadow-sm">
+                    <a href="{% url 'lessons:lesson_detail' lesson.slug %}" class="lesson-card-link">
+                        {% if lesson.cover_image %}
+                        <img src="{{ lesson.cover_image.url }}" class="card-img-top lesson-cover-image" alt="{{ lesson.title }}">
+                        {% else %}
+                        <div class="card-img-top d-flex align-items-center justify-content-center lesson-default-cover">
+                            {% if lesson.icon %}
+                            <span class="lesson-default-cover-icon">{{ lesson.icon|render_icon|safe }}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="badge bg-primary me-2">Lesson {{ lesson.lesson_number }}</span>
+                                <span class="text-muted small">Ages {{ lesson.age_range }}</span>
+                            </div>
+                            <h5 class="card-title">{% if lesson.icon %}{{ lesson.icon|render_icon|safe }} {% endif %}{{ lesson.title }}</h5>
+                            {% if lesson.subtitle %}
+                            <p class="card-text text-muted">{{ lesson.subtitle }}</p>
+                            {% endif %}
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <i class="bi bi-clock"></i> {{ lesson.duration_minutes }} min
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <p class="mb-0">Lessons are coming soon! Stay tuned!</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+

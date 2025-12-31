@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Page title -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2">💼 Virtual Wallet</h1>
+                    <p class="text-muted">Manage virtual coins for educational purposes</p>
+                </div>
+                <div>
+                    <a href="{% url 'wallet:wallet_create' %}" class="btn btn-primary me-2">
+                        <i class="bi bi-plus-circle"></i> Create Wallet
+                    </a>
+                    <a href="{% url 'wallet:wallet_dashboard' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-bar-chart"></i> Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter and search -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-4">
+                            <label for="search" class="form-label">Search</label>
+                            <input type="text" class="form-control" id="search" name="search" 
+                                   value="{{ search_query }}" placeholder="Search by coin name or child name...">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="child" class="form-label">Child</label>
+                            <select class="form-control" id="child" name="child">
+                                <option value="">All Children</option>
+                                {% for child in child_names %}
+                                <option value="{{ child }}" {% if child_filter == child %}selected{% endif %}>
+                                    {{ child }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="mode" class="form-label">Mode</label>
+                            <select class="form-control" id="mode" name="mode">
+                                <option value="">All Modes</option>
+                                <option value="practice" {% if mode_filter == 'practice' %}selected{% endif %}>
+                                    <i class="bi bi-pencil-square"></i> Practice Mode
+                                </option>
+                                <option value="real" {% if mode_filter == 'real' %}selected{% endif %}>Real Mode</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Total balance - distinguish practice mode and real mode -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">💰 Total Balance</h5>
+                    <h2 class="mb-0">{{ total_balance|floatformat:2 }}</h2>
+                    <small>{{ wallets_with_balance|length }} wallet{{ wallets_with_balance|length|pluralize }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm text-white" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); border: 3px solid #17a2b8;">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">
+                        <i class="bi bi-pencil-square"></i> Practice Mode
+                    </h5>
+                    <h2 class="mb-0">{{ practice_balance|floatformat:2 }}</h2>
+                    <small>{{ practice_count }} wallet{{ practice_count|pluralize }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm text-white" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-2">💼 Real Mode</h5>
+                    <h2 class="mb-0">{{ real_balance|floatformat:2 }}</h2>
+                    <small>{{ real_count }} wallet{{ real_count|pluralize }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet list -->
+    <div class="row">
+        {% for item in wallets_with_balance %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card wallet-card shadow-sm h-100 {% if item.wallet.is_practice_mode %}practice-wallet-card{% else %}real-wallet-card{% endif %}">
+                <div class="card-body">
+                    {% if item.wallet.is_practice_mode %}
+                    <div class="practice-mode-banner mb-3">
+                        <div class="d-flex align-items-center justify-content-center p-2 rounded" style="background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); color: white;">
+                            <i class="bi bi-pencil-square me-2" style="font-size: 1.2rem;"></i>
+                            <strong>PRACTICE MODE</strong>
+                            <i class="bi bi-info-circle ms-2" style="font-size: 0.9rem;" title="This is a practice wallet for learning. Transactions here don't affect your real balance."></i>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="badge {% if item.wallet.is_practice_mode %}bg-info{% else %}bg-success{% endif %}">
+                                {{ item.wallet.coin_icon }} {{ item.wallet.coin_name }}
+                            </span>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{% url 'wallet:wallet_detail' item.wallet.pk %}">View</a></li>
+                                <li><a class="dropdown-item" href="{% url 'wallet:transaction_list' item.wallet.pk %}">Transactions</a></li>
+                                <li><a class="dropdown-item" href="{% url 'wallet:transaction_create' item.wallet.pk %}">Add Transaction</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{% url 'wallet:wallet_edit' item.wallet.pk %}">Edit</a></li>
+                                <li><a class="dropdown-item text-danger" href="{% url 'wallet:wallet_delete' item.wallet.pk %}">Delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4 class="wallet-balance mb-2">{{ item.wallet.coin_icon }} {{ item.balance|floatformat:2 }}</h4>
+                    
+                    {% if item.wallet.child_name %}
+                    <p class="wallet-child mb-2">
+                        <small class="text-muted"><i class="bi bi-person"></i> {{ item.wallet.child_name }}</small>
+                    </p>
+                    {% endif %}
+                    
+                    <div class="wallet-meta">
+                        <small class="text-muted d-block">
+                            <i class="bi bi-calendar"></i> Created: {{ item.wallet.created_at|date:"M d, Y" }}
+                        </small>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="{% url 'wallet:transaction_list' item.wallet.pk %}" class="btn btn-sm btn-outline-primary w-100">
+                            View Transactions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body text-center py-5">
+                    <h4 class="text-muted">No wallets found</h4>
+                    <p class="text-muted">Start by creating your first virtual wallet!</p>
+                    <a href="{% url 'wallet:wallet_create' %}" class="btn btn-primary mt-3">
+                        <i class="bi bi-plus-circle"></i> Create Your First Wallet
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
+

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Page title -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2">{{ wallet.coin_icon }} {{ wallet.coin_name }} Transactions</h1>
+                    <p class="text-muted">Transaction history for {{ wallet.coin_icon }} {{ wallet.coin_name }}</p>
+                    {% if wallet.is_practice_mode %}
+                    <div class="mt-2">
+                        <span class="badge bg-info" style="font-size: 0.9rem;">
+                            <i class="bi bi-pencil-square"></i> Practice Mode Wallet
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% if wallet.child_name %}
+                    <p class="text-muted mt-2"><i class="bi bi-person"></i> {{ wallet.child_name }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <a href="{% url 'wallet:transaction_create' wallet.pk %}" class="btn btn-primary me-2">
+                        <i class="bi bi-plus-circle"></i> Add Transaction
+                    </a>
+                    <a href="{% url 'wallet:wallet_detail' wallet.pk %}" class="btn btn-outline-info">
+                        <i class="bi bi-arrow-left"></i> Back to Wallet
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter and search -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form method="get" class="row g-3">
+                        <div class="col-md-3">
+                            <label for="search" class="form-label">Search</label>
+                            <input type="text" class="form-control" id="search" name="search" 
+                                   value="{{ search_query }}" placeholder="Search description...">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="type" class="form-label">Type</label>
+                            <select class="form-control" id="type" name="type">
+                                <option value="">All Types</option>
+                                <option value="income" {% if type_filter == 'income' %}selected{% endif %}>Income</option>
+                                <option value="expense" {% if type_filter == 'expense' %}selected{% endif %}>Expense</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="date_from" class="form-label">From Date</label>
+                            <input type="date" class="form-control" id="date_from" name="date_from" value="{{ date_from }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="date_to" class="form-label">To Date</label>
+                            <input type="date" class="form-control" id="date_to" name="date_to" value="{{ date_to }}">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm bg-success text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Income</h5>
+                    <h2 class="mb-0">{{ wallet.coin_icon }} {{ total_income|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm bg-danger text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Expense</h5>
+                    <h2 class="mb-0">{{ wallet.coin_icon }} {{ total_expense|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction list -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr>
+                                    <td>{{ transaction.date|date:"M d, Y" }}</td>
+                                    <td>
+                                        {% if transaction.transaction_type == 'income' %}
+                                        <span class="badge bg-success">Income</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Expense</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if transaction.transaction_type == 'income' %}
+                                        <span class="text-success">+{{ wallet.coin_icon }} {{ transaction.amount|floatformat:2 }}</span>
+                                        {% else %}
+                                        <span class="text-danger">-{{ wallet.coin_icon }} {{ transaction.amount|floatformat:2 }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ transaction.description }}</td>
+                                    <td>
+                                        <a href="{% url 'wallet:transaction_detail' transaction.pk %}" class="btn btn-sm btn-outline-primary me-1">
+                                            View
+                                        </a>
+                                        <a href="{% url 'wallet:transaction_edit' transaction.pk %}" class="btn btn-sm btn-outline-secondary me-1">
+                                            Edit
+                                        </a>
+                                        <a href="{% url 'wallet:transaction_delete' transaction.pk %}" class="btn btn-sm btn-outline-danger">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center py-5">
+                                        <h4 class="text-muted">No transactions found</h4>
+                                        <p class="text-muted">Start by adding your first transaction!</p>
+                                        <a href="{% url 'wallet:transaction_create' wallet.pk %}" class="btn btn-primary mt-3">
+                                            <i class="bi bi-plus-circle"></i> Add Your First Transaction
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form class="auth-form" id="account-form" method="post" validate-username="{% url 'accounts:validate_username' %}">
+    {% csrf_token %}
+    <div class="h5 text-center mb-3 font-weight-normal">Account</div>
+    <div class="m-auto" id="notice-msg">
+        <img class="img-fluid image" src="{{ user.profile.profile_image.url }}" style="border-radius:50%;height:80px">
+    </div>
+    <br>
+    <div class="form-floating mb-3">
+        <input type="email" name="email" id="id_email" class="form-control" placeholder="Email address*"
+            value="{{ user.email }}" readonly>
+        <label for="id_email">Email address*</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" name="username" id="id_username" class="form-control" placeholder="Username*"
+            value="{{ user.username }}" readonly>
+        <label for="id_username">Username*</label>
+    </div>
+    {% if form.errors %}
+    <ul style="list-style-type:none;">
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="alert alert-danger">
+            <li>{{field.label}}: {{ error|escape }}</li>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+            <li>{{ error|escape }}</li>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% if success_message %}
+    <div class="alert alert-success">{{ success_message }}</div>
+    {% endif %}
+    <button type="button" class="btn btn-outline-info" onclick="javascript:history.back()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Update Account</button>
+</form>
+<br>
+<div class="d-flex flex-column">
+    <a class="m-auto" href="{% url 'password_change' %}">Change Password</a>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/username.js' %}"></script>
+{% endblock scripts %}

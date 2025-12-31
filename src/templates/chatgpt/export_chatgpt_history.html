@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-lg-8 offset-lg-2">
+    <div class="h5 text-center mb-3 font-weight-normal">Export ChatGPT History</div>
+    <div class="d-grid d-flex justify-content-center">{{ status_message }}</div>
+    <!-- <div id="notice-msg">{{ status_message }}</div> -->
+    <br>
+    <!-- nav btn -->
+    <div class="d-grid gap-1 d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-secondary" onclick="javascript:history.back()">Back</button>
+        <div class="d-grid gap-2 d-flex justify-content-center">
+            <a class="btn btn-outline-primary" href="{% url 'chatgpt:get_chatgpt' %}">ChatGPT</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

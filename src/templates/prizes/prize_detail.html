@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Navigation breadcrumb -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'prizes:prize_list' %}">Prizes</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ prize.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Prize image/icon -->
+        <div class="col-md-5 mb-4">
+            {% if prize.image %}
+            <img src="{{ prize.image.url }}" class="img-fluid rounded shadow" alt="{{ prize.name }}">
+            {% else %}
+            <div class="d-flex align-items-center justify-content-center rounded shadow" 
+                 style="height: 400px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <span style="font-size: 8rem;">{{ prize.icon }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Prize details -->
+        <div class="col-md-7">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <!-- Title and labels -->
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h1 class="card-title mb-2">{{ prize.icon }} {{ prize.name }}</h1>
+                            <div>
+                                {% if prize.is_featured %}
+                                <span class="badge bg-warning text-dark me-2">
+                                    <i class="bi bi-star-fill"></i> Featured
+                                </span>
+                                {% endif %}
+                                <span class="badge bg-info">{{ prize.get_category_display }}</span>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <div class="h2 mb-0 text-primary">⭐ {{ prize.coin_cost|floatformat:0 }}</div>
+                            <small class="text-muted">coins</small>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Description -->
+                    <div class="mb-4">
+                        <h5>Description</h5>
+                        <p class="text-muted">{{ prize.description|linebreaks }}</p>
+                    </div>
+
+                    <!-- Stock information -->
+                    {% if prize.stock_quantity >= 0 %}
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-box"></i> <strong>Stock:</strong> {{ prize.remaining_stock }} left
+                    </div>
+                    {% endif %}
+
+                    <!-- Availability information -->
+                    {% if prize.is_available %}
+                    <div class="alert alert-success mb-4">
+                        <i class="bi bi-check-circle-fill"></i> This prize is available for redemption!
+                    </div>
+                    {% else %}
+                    <div class="alert alert-warning mb-4">
+                        <i class="bi bi-exclamation-triangle-fill"></i> This prize is currently not available.
+                    </div>
+                    {% endif %}
+
+                    <!-- User balance and redemption -->
+                    {% if user.is_authenticated %}
+                    <div class="card bg-light mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <strong>Your Balance:</strong>
+                                    <span class="h5 mb-0 ms-2">⭐ {{ user_balance|floatformat:2 }} coins</span>
+                                </div>
+                                {% if not can_redeem %}
+                                <div>
+                                    <a href="{% url 'lessons:lesson_list' %}" class="btn btn-sm btn-outline-primary">
+                                        Earn More Coins
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            {% if can_redeem %}
+                            <div class="mt-3">
+                                {% if wallet_count > 1 %}
+                                <a href="{% url 'prizes:prize_redeem' prize.pk %}" class="btn btn-success btn-lg w-100" style="border-radius: 15px;">
+                                    <i class="bi bi-gift-fill"></i> Redeem Prize
+                                    <small class="d-block mt-1">Choose wallet</small>
+                                </a>
+                                {% else %}
+                                <form method="post" action="{% url 'prizes:prize_redeem' prize.pk %}" class="d-inline w-100">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success btn-lg w-100" style="border-radius: 15px;">
+                                        <i class="bi bi-gift-fill"></i> Redeem Prize
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                            {% else %}
+                            <div class="alert alert-warning mb-0">
+                                <i class="bi bi-info-circle"></i> {{ redeem_message }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> Please <a href="{% url 'accounts:login' %}">login</a> to redeem this prize.
+                    </div>
+                    {% endif %}
+
+                    <!-- Back button -->
+                    <div class="mt-4">
+                        <a href="{% url 'prizes:prize_list' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to Prizes
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+

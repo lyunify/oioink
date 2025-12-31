@@ -1,0 +1,6 @@
+# Ignore Django template files
+**/*.html
+src/templates/**/*.html
+
+
+

@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Breadcrumb navigation -->
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'achievements:achievement_list' %}">Achievements</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ achievement.name }}</li>
+                </ol>
+            </nav>
+
+            <!-- Achievement detail card -->
+            <div class="card shadow-sm achievement-detail-card" style="border-left: 6px solid {{ achievement.color }};">
+                <div class="card-body text-center p-5">
+                    <!-- Achievement icon and status -->
+                    <div class="mb-4">
+                        <div style="font-size: 6rem; {% if not is_unlocked %}filter: grayscale(100%); opacity: 0.5;{% endif %}">
+                            {{ achievement.icon }}
+                        </div>
+                    </div>
+                    
+                    {% if is_unlocked %}
+                    <div class="alert alert-success mb-4">
+                        <h5 class="mb-0"><i class="bi bi-check-circle-fill"></i> Achievement Unlocked!</h5>
+                        {% if user_achievement %}
+                        <small>Unlocked on {{ user_achievement.unlocked_at|date:"F d, Y" }}</small>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div class="alert alert-secondary mb-4">
+                        <h5 class="mb-0"><i class="bi bi-lock-fill"></i> Achievement Locked</h5>
+                        <small>Complete the requirements to unlock this achievement</small>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Achievement name -->
+                    <h1 class="display-4 mb-3">{{ achievement.name }}</h1>
+                    
+                    <!-- Achievement description -->
+                    <p class="lead text-muted mb-4">{{ achievement.description }}</p>
+                    
+                    <!-- Reward information -->
+                    {% if achievement.coin_reward > 0 %}
+                    <div class="mb-4">
+                        <div class="card bg-warning text-dark d-inline-block">
+                            <div class="card-body">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-coin"></i> Reward: {{ achievement.coin_reward|floatformat:0 }} virtual coins
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <hr class="my-4">
+                    
+                    <!-- Detailed information -->
+                    <div class="achievement-detail-info text-start">
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Type:</strong></div>
+                            <div class="col-sm-8">
+                                <span class="badge bg-info">{{ achievement.get_achievement_type_display }}</span>
+                            </div>
+                        </div>
+                        
+                        {% if is_unlocked and user_achievement %}
+                        <div class="row mb-3">
+                            <div class="col-sm-4"><strong>Unlocked:</strong></div>
+                            <div class="col-sm-8">{{ user_achievement.unlocked_at|date:"F d, Y H:i" }}</div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="row">
+                            <div class="col-sm-4"><strong>Created:</strong></div>
+                            <div class="col-sm-8">{{ achievement.created_at|date:"F d, Y" }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'achievements:achievement_list' %}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Achievements
+                    </a>
+                    {% if is_unlocked %}
+                    <span class="btn btn-success disabled">
+                        <i class="bi bi-check-circle"></i> You have this achievement!
+                    </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+
+

@@ -1,0 +1,14 @@
+{% autoescape off %}
+
+Hi {{user.username}},
+
+Please click the link below to verify your email for your Account {{ user.email }}:
+
+{{ protocol }}://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser window instead.
+
+Sincerely,
+The OiOink Team
+
+{% endautoescape %}

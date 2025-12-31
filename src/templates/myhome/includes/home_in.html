@@ -1,0 +1,177 @@
+{% load static %}
+
+<div class="homepage-modern">
+    <!-- Hero Section -->
+    <div class="homepage-hero">
+        <div class="hero-content">
+            <div class="hero-badge">✨ Your Financial Journey Starts Here</div>
+            <h1 class="hero-title">
+                <span class="hero-title-main">Welcome to</span>
+                <span class="hero-title-brand">OiOink!</span>
+            </h1>
+            <p class="hero-subtitle">Learn about money in a fun and engaging way</p>
+            <div class="hero-stats">
+                <div class="hero-stat-item">
+                    <div class="hero-stat-number">💰</div>
+                    <div class="hero-stat-label">Financial Skills</div>
+                </div>
+                <div class="hero-stat-item">
+                    <div class="hero-stat-number">🎯</div>
+                    <div class="hero-stat-label">Smart Goals</div>
+                </div>
+                <div class="hero-stat-item">
+                    <div class="hero-stat-number">🏆</div>
+                    <div class="hero-stat-label">Achievements</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Features Grid -->
+    <div class="homepage-features">
+        <div class="features-grid">
+            <!-- Dashboard Card -->
+            <a href="{% url 'myhome:dashboard' %}" class="feature-card-modern feature-card-dashboard">
+                <div class="feature-card-modern-content">
+                    <div class="feature-card-modern-header">
+                        <div class="feature-icon-modern">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                        <div class="feature-badge-modern">Dashboard</div>
+                    </div>
+                    <h3 class="feature-title-modern">My Dashboard</h3>
+                    <p class="feature-description-modern">See all your money, goals, and progress in one place!</p>
+                    <div class="feature-action-modern">
+                        <span>Explore</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card-modern-accent"></div>
+            </a>
+
+            <!-- Lessons Card -->
+            <a href="{% url 'lessons:lesson_list' %}" class="feature-card-modern feature-card-lessons">
+                <div class="feature-card-modern-content">
+                    <div class="feature-card-modern-header">
+                        <div class="feature-icon-modern">
+                            <i class="bi bi-book"></i>
+                        </div>
+                        <div class="feature-badge-modern">Education</div>
+                    </div>
+                    <h3 class="feature-title-modern">Learn & Play</h3>
+                    <p class="feature-description-modern">Fun lessons about money, saving, and spending wisely!</p>
+                    <div class="feature-action-modern">
+                        <span>Start Learning</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card-modern-accent"></div>
+            </a>
+
+            <!-- Wallet Card -->
+            <a href="{% url 'wallet:wallet_list' %}" class="feature-card-modern feature-card-wallet">
+                <div class="feature-card-modern-content">
+                    <div class="feature-card-modern-header">
+                        <div class="feature-icon-modern">
+                            <i class="bi bi-wallet2"></i>
+                        </div>
+                        <div class="feature-badge-modern">Finance</div>
+                    </div>
+                    <h3 class="feature-title-modern">My Wallet</h3>
+                    <p class="feature-description-modern">Track your virtual coins and see how much you have!</p>
+                    <div class="feature-action-modern">
+                        <span>View Wallet</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+                <div class="feature-card-modern-accent"></div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Secondary Features -->
+    <div class="homepage-secondary-features">
+        <div class="secondary-features-grid">
+            <!-- Saving Goals -->
+            <a href="{% url 'tracking:saving_goal_list' %}" class="secondary-feature-card secondary-feature-saving">
+                <div class="secondary-feature-icon">
+                    <i class="bi bi-bullseye"></i>
+                </div>
+                <div class="secondary-feature-content">
+                    <h4 class="secondary-feature-title">Saving Goals</h4>
+                    <p class="secondary-feature-description">Set goals and watch your savings grow!</p>
+                </div>
+                <div class="secondary-feature-arrow">
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Spending Tracker -->
+            <a href="{% url 'tracking:spending_list' %}" class="secondary-feature-card secondary-feature-spending">
+                <div class="secondary-feature-icon">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+                <div class="secondary-feature-content">
+                    <h4 class="secondary-feature-title">Spending Tracker</h4>
+                    <p class="secondary-feature-description">Keep track of what you spend!</p>
+                </div>
+                <div class="secondary-feature-arrow">
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Achievements -->
+            <a href="{% url 'achievements:achievement_list' %}" class="secondary-feature-card secondary-feature-achievements">
+                <div class="secondary-feature-icon">
+                    <i class="bi bi-trophy"></i>
+                </div>
+                <div class="secondary-feature-content">
+                    <h4 class="secondary-feature-title">Achievements</h4>
+                    <p class="secondary-feature-description">Unlock badges and earn rewards!</p>
+                </div>
+                <div class="secondary-feature-arrow">
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Prize Shop -->
+            <a href="{% url 'prizes:prize_list' %}" class="secondary-feature-card secondary-feature-prizes">
+                <div class="secondary-feature-icon">
+                    <i class="bi bi-gift"></i>
+                </div>
+                <div class="secondary-feature-content">
+                    <h4 class="secondary-feature-title">Prize Shop</h4>
+                    <p class="secondary-feature-description">Use your coins to get cool prizes!</p>
+                </div>
+                <div class="secondary-feature-arrow">
+                    <i class="bi bi-arrow-right"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Quick Tips Section -->
+    <div class="homepage-tips">
+        <div class="tips-header">
+            <h2 class="tips-title">💡 Quick Tips</h2>
+            <p class="tips-subtitle">Get started with these helpful tips</p>
+        </div>
+        <div class="tips-grid">
+            <div class="tip-card">
+                <div class="tip-icon">📚</div>
+                <h4 class="tip-title">Learn First</h4>
+                <p class="tip-text">Complete lessons to earn coins!</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🎯</div>
+                <h4 class="tip-title">Set Goals</h4>
+                <p class="tip-text">Save money for things you want!</p>
+            </div>
+            <div class="tip-card">
+                <div class="tip-icon">🏆</div>
+                <h4 class="tip-title">Earn Rewards</h4>
+                <p class="tip-text">Unlock achievements and get prizes!</p>
+            </div>
+        </div>
+    </div>
+</div>

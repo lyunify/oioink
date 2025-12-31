@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4 mb-5">
+    <!-- Page title -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="mb-2">📊 Saving Dashboard</h1>
+                    <p class="text-muted">View your saving statistics and insights</p>
+                </div>
+                <div>
+                    <a href="{% url 'tracking:saving_goal_list' %}" class="btn btn-outline-primary me-2">
+                        <i class="bi bi-bullseye"></i> Saving Goals
+                    </a>
+                    <a href="{% url 'tracking:saving_list' %}" class="btn btn-outline-success">
+                        <i class="bi bi-list"></i> View All
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-success text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">This Month</h5>
+                    <h2 class="mb-0">${{ this_month_total|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-info text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Last 7 Days</h5>
+                    <h2 class="mb-0">${{ recent_total|floatformat:2 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-primary text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Goals</h5>
+                    <h2 class="mb-0">{{ total_goals }}</h2>
+                    <small>{{ completed_goals }} completed</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card shadow-sm bg-warning text-white">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Total Records</h5>
+                    <h2 class="mb-0">{{ total_savings }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saving goal progress -->
+    {% if saving_goals %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">🎯 Saving Goals Progress</h5>
+                    <a href="{% url 'tracking:saving_goal_list' %}" class="btn btn-sm btn-outline-primary">View All Goals</a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for goal in saving_goals %}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100" style="border-left: 4px solid {{ goal.color }};">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <h6 class="mb-0">{{ goal.icon }} {{ goal.goal_name }}</h6>
+                                        <a href="{% url 'tracking:saving_goal_detail' goal.pk %}" class="btn btn-sm btn-outline-secondary">
+                                            <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="mb-2">
+                                        <div class="d-flex justify-content-between mb-1">
+                                            <small class="text-muted">Progress</small>
+                                            <small class="text-muted"><strong>{{ goal.progress_percentage|floatformat:1 }}%</strong></small>
+                                        </div>
+                                        <div class="progress" style="height: 20px;">
+                                            <div class="progress-bar" role="progressbar" 
+                                                 style="width: {{ goal.progress_percentage }}%; background-color: {{ goal.color }};"
+                                                 aria-valuenow="{{ goal.progress_percentage }}" 
+                                                 aria-valuemin="0" 
+                                                 aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="small">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted">Saved:</span>
+                                            <strong>${{ goal.current_amount|floatformat:2 }}</strong>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span class="text-muted">Target:</span>
+                                            <strong>${{ goal.target_amount|floatformat:2 }}</strong>
+                                        </div>
+                                    </div>
+                                    
+                                    {% if goal.is_completed %}
+                                    <div class="mt-2">
+                                        <span class="badge bg-success"><i class="bi bi-check-circle"></i> Completed</span>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Statistics by goal -->
+    {% if goal_stats %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">🎯 Saving by Goal</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Goal</th>
+                                    <th>Count</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stat in goal_stats %}
+                                <tr>
+                                    <td>{{ stat.goal }}</td>
+                                    <td>{{ stat.count }}</td>
+                                    <td><strong>${{ stat.total|floatformat:2 }}</strong></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Statistics by child -->
+    {% if child_stats %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">👶 Saving by Child</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Child Name</th>
+                                    <th>Count</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stat in child_stats %}
+                                <tr>
+                                    <td>{{ stat.child_name }}</td>
+                                    <td>{{ stat.count }}</td>
+                                    <td><strong>${{ stat.total|floatformat:2 }}</strong></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}
+

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div id="notice-msg">
+    <div class="h5 text-center mb-3 font-weight-normal">Email To Be Verified</div>
+    <div>Please confirm email address in your email account to complete the sign up.</div>
+    <br><br>
+    <a class="btn btn-outline-primary" href="{% url 'myhome:home' %}">Home</a>
+</div>
+
+{% endblock content %}

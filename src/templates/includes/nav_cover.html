@@ -1,0 +1,58 @@
+{% load static %}
+
+<!-- =================================== nav_cover ======================================== -->
+
+<nav class="navbar navbar-expand-lg navbar-light sticky-top shadow-sm border-bottom modern-navbar" style="padding: 0.75rem 0;">
+    <div class="container-fluid px-4">
+        <!-- Logo/Brand -->
+        <a class="navbar-brand d-flex align-items-center me-4" href="{% url 'myhome:home' %}" style="font-weight: 700; font-size: 1.5rem; color: #6366f1;">
+            <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">oioink</span>
+        </a>
+
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation" style="padding: 0.25rem 0.5rem;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Navigation Links -->
+            <ul class="navbar-nav d-flex align-items-center gap-3 mb-2 mb-lg-0 ms-lg-auto">
+                <!-- Sign In -->
+                <li class="nav-item">
+                    <a class="btn-nav-cover btn-nav-signin" href="{% url 'accounts:signin' %}">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                    </a>
+                </li>
+
+                <!-- Sign Up -->
+                <li class="nav-item">
+                    <a class="btn-nav-cover btn-nav-signup" href="{% url 'accounts:signup' %}">
+                        <i class="bi bi-person-plus me-2"></i>Sign Up
+                    </a>
+                </li>
+
+                <!-- Information Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link modern-nav-link dropdown-toggle" href="#" id="infoDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-info-circle me-2"></i><span>Information</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-modern shadow-sm border-0 dropdown-menu-end" aria-labelledby="infoDropdown">
+                        <li><a class="dropdown-item dropdown-item-modern" href="{% url 'myhome:news' %}"><i class="bi bi-newspaper me-2"></i> News</a></li>
+                        <li><a class="dropdown-item dropdown-item-modern" href="{% url 'myhome:about' %}"><i class="bi bi-people me-2"></i> About Us</a></li>
+                        <li><a class="dropdown-item dropdown-item-modern" href="{% url 'myhome:faqs' %}"><i class="bi bi-question-circle me-2"></i> FAQs</a></li>
+                        <li><a class="dropdown-item dropdown-item-modern" href="{% url 'myhome:contact' %}"><i class="bi bi-envelope me-2"></i> Contact</a></li>
+                        <li><a class="dropdown-item dropdown-item-modern" href="{% url 'myhome:support' %}"><i class="bi bi-heart me-2"></i> Support Us</a></li>
+                        <li><hr class="dropdown-divider my-2"></li>
+                        <li><a class="dropdown-item dropdown-item-modern" href="{% url 'cal:calendar' %}"><i class="bi bi-calendar3 me-2"></i> Calendar</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- =================================== nav_cover end ==================================== -->
