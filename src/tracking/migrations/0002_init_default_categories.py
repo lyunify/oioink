@@ -4,7 +4,7 @@ from django.db import migrations
 
 
 def create_default_categories(apps, schema_editor):
-    """创建默认支出类别"""
+    """Create default spending categories"""
     SpendingCategory = apps.get_model('tracking', 'SpendingCategory')
     
     categories_data = [
@@ -78,7 +78,7 @@ def create_default_categories(apps, schema_editor):
 
 
 def remove_default_categories(apps, schema_editor):
-    """移除默认类别（回滚时使用）"""
+    """Remove default categories (used for rollback)"""
     SpendingCategory = apps.get_model('tracking', 'SpendingCategory')
     
     default_names = ['Clothing', 'Video', 'Electronics', 'School Supplies', 'Games', 'Food', 'Transportation', 'Sports', 'Gifts', 'Other']

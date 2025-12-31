@@ -2,7 +2,7 @@
 cd /Users/katy/project/eduaify/src
 source ../bin/activate
 
-echo "检查数据库连接..."
+echo "Checking database connection..."
 python -c "
 import os
 import sys
@@ -19,23 +19,23 @@ db_user = connection.settings_dict['USER']
 
 print('=' * 60)
 if 'postgresql' in engine:
-    print('✅ 连接的是 PostgreSQL')
-    print(f'   数据库: {db_name}')
-    print(f'   用户: {db_user}')
+    print('✅ Connected to PostgreSQL')
+    print(f'   Database: {db_name}')
+    print(f'   User: {db_user}')
     
     try:
         cursor = connection.cursor()
         cursor.execute('SELECT version();')
         version = cursor.fetchone()[0]
-        print(f'   版本: {version[:60]}...')
-        print('✅ 连接成功！')
+        print(f'   Version: {version[:60]}...')
+        print('✅ Connection successful!')
     except Exception as e:
-        print(f'❌ 连接失败: {e}')
+        print(f'❌ Connection failed: {e}')
 elif 'sqlite' in engine:
-    print('❌ 连接的是 SQLite')
-    print(f'   数据库文件: {db_name}')
+    print('❌ Connected to SQLite')
+    print(f'   Database file: {db_name}')
 else:
-    print(f'⚠️  未知的数据库引擎: {engine}')
+    print(f'⚠️  Unknown database engine: {engine}')
 print('=' * 60)
 "
 
